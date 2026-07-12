@@ -210,7 +210,7 @@ class AIService:
         
         # Prepare payload
         payload = {
-            "model": "llama3-8b-8192",
+            "model": "llama-3.3-70b-versatile",
             "messages": [
                 {"role": "system", "content": "You are a database developer assistant. You translate user questions to safe read-only SQL queries."},
                 {"role": "user", "content": schema_context.format(query=query)}
@@ -262,7 +262,7 @@ class AIService:
                 """
                 
                 payload_fmt = {
-                    "model": "llama3-8b-8192",
+                    "model": "llama-3.3-70b-versatile",
                     "messages": [
                         {"role": "system", "content": "You are a helpful fleet dispatcher bot. Format DB results nicely into markdown tables or lists."},
                         {"role": "user", "content": format_prompt}

@@ -77,7 +77,11 @@ def get_fuel_trend(
     ).group_by("day").order_by("day").limit(10).all()
     
     return [
-        {"date": r.day.strftime("%Y-%m-%d") if r.day else "", "cost": float(r.cost), "quantity": float(r.quantity)}
+        {
+            "date": (r.day if isinstance(r.day, str) else r.day.strftime("%Y-%m-%d")) if r.day else "",
+            "cost": float(r.cost),
+            "quantity": float(r.quantity)
+        }
         for r in results
     ]
 
