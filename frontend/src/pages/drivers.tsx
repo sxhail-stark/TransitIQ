@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { api } from "../lib/api";
+import { useAuth } from "../context/AuthContext";
 
 export const Drivers: React.FC = () => {
+  const { user } = useAuth();
+  const isManager = user?.role === "Fleet Manager";
+
   const [drivers, setDrivers] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -12,6 +16,7 @@ export const Drivers: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form, setForm] = useState({
     full_name: "",
+    email: "",
     license_number: "",
     license_expiry: "",
     phone: "",
@@ -40,8 +45,15 @@ export const Drivers: React.FC = () => {
     e.preventDefault();
     setError(null);
 
-    if (!form.full_name.trim() || !form.license_number.trim() || !form.license_expiry) {
-      setError("Name, license, and expiry are required fields");
+    if (!form.full_name.trim() || !form.email.trim() || !form.license_number.trim() || !form.license_expiry) {
+      setError("Name, email, license, and expiry are required fields");
+      return;
+    }
+
+    // License Validation check: exactly 16-character alphanumeric code
+    const licenseRegex = /^[a-zA-Z0-9]{16}$/;
+    if (!licenseRegex.test(form.license_number.trim())) {
+      setError("License number must be exactly a 16-character alphanumeric code");
       return;
     }
 
@@ -60,6 +72,7 @@ export const Drivers: React.FC = () => {
       setIsModalOpen(false);
       setForm({
         full_name: "",
+        email: "",
         license_number: "",
         license_expiry: "",
         phone: "",
@@ -116,13 +129,15 @@ export const Drivers: React.FC = () => {
           </select>
         </div>
 
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="bg-primary text-black font-semibold px-lg py-2 rounded hover:bg-primary-container transition-colors flex items-center gap-sm cursor-pointer shadow-md self-start md:self-auto"
-        >
-          <span className="material-symbols-outlined text-[20px]">add</span>
-          <span>Add Driver</span>
-        </button>
+        {isManager && (
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="bg-primary text-black font-semibold px-lg py-2 rounded hover:bg-primary-container transition-colors flex items-center gap-sm cursor-pointer shadow-md self-start md:self-auto"
+          >
+            <span className="material-symbols-outlined text-[20px]">add</span>
+            <span>Add Driver</span>
+          </button>
+        )}
       </div>
 
       {/* Grid of Driver Cards */}
@@ -197,16 +212,18 @@ export const Drivers: React.FC = () => {
                 <div className="flex gap-sm border-t border-surface-variant pt-md mt-sm">
                   <Link
                     to={`/drivers/${d.id}`}
-                    className="flex-1 text-center py-1.5 bg-surface-container-high hover:bg-surface-variant border border-surface-variant rounded text-on-background font-label-md text-[12px] transition-colors"
+                    className="flex-grow text-center py-1.5 bg-surface-container-high hover:bg-surface-variant border border-surface-variant rounded text-on-background font-label-md text-[12px] transition-colors"
                   >
                     View Profile
                   </Link>
-                  <button
-                    onClick={() => handleDelete(d.id)}
-                    className="px-3 py-1.5 bg-error-container/10 hover:bg-error-container/20 rounded border border-error/20 text-error font-label-md text-[12px] transition-colors cursor-pointer"
-                  >
-                    Remove
-                  </button>
+                  {isManager && (
+                    <button
+                      onClick={() => handleDelete(d.id)}
+                      className="px-3 py-1.5 bg-error-container/10 hover:bg-error-container/20 rounded border border-error/20 text-error font-label-md text-[12px] transition-colors cursor-pointer"
+                    >
+                      Remove
+                    </button>
+                  )}
                 </div>
               </div>
             );
@@ -249,6 +266,18 @@ export const Drivers: React.FC = () => {
                   className="w-full bg-surface-container-low border border-surface-variant rounded py-2 px-3 text-on-background focus:outline-none focus:border-primary"
                   value={form.full_name}
                   onChange={(e) => setForm({ ...form, full_name: e.target.value })}
+                />
+              </div>
+
+              <div className="flex flex-col gap-xs">
+                <label className="font-label-md text-label-md text-on-surface">Driver Email Address</label>
+                <input
+                  type="email"
+                  required
+                  placeholder="e.g. johndoe@transitiq.com"
+                  className="w-full bg-surface-container-low border border-surface-variant rounded py-2 px-3 text-on-background focus:outline-none focus:border-primary"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
                 />
               </div>
 

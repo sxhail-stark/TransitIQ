@@ -4,6 +4,7 @@ import { api } from "../lib/api";
 export const ActivityTimeline: React.FC = () => {
   const [logs, setLogs] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchLogs = async () => {
@@ -19,22 +20,41 @@ export const ActivityTimeline: React.FC = () => {
     fetchLogs();
   }, []);
 
+  const filteredLogs = logs.filter((log) => {
+    const q = searchQuery.toLowerCase();
+    return (
+      log.action.toLowerCase().includes(q) ||
+      log.description.toLowerCase().includes(q) ||
+      (log.user && log.user.full_name.toLowerCase().includes(q)) ||
+      (log.user && log.user.role.toLowerCase().includes(q))
+    );
+  });
+
   return (
     <div className="bg-surface-container border border-surface-variant rounded-xl p-lg shadow-md font-sans space-y-lg">
-      <div className="border-b border-surface-variant pb-md">
-        <h3 className="font-headline-md text-title-md text-on-background">System Audit Logs</h3>
-        <p className="text-sm text-on-surface-variant mt-xs">
-          Chronological record of all updates, dispatches, expense records, and security auth activities.
-        </p>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-md border-b border-surface-variant pb-md">
+        <div>
+          <h3 className="font-headline-md text-title-md text-on-background">System Audit Logs</h3>
+          <p className="text-sm text-on-surface-variant mt-xs">
+            Chronological record of all updates, dispatches, expense records, and security auth activities.
+          </p>
+        </div>
+        <input
+          type="text"
+          placeholder="Search activity description, user, role..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="bg-surface-container-low border border-surface-variant rounded-md py-2 px-3 text-on-background focus:outline-none focus:border-primary text-body-md w-full md:w-80 shadow-sm"
+        />
       </div>
 
       {isLoading ? (
         <div className="py-xl text-center text-on-surface-variant font-label-md text-xs">
           Loading audit trails...
         </div>
-      ) : logs.length > 0 ? (
+      ) : filteredLogs.length > 0 ? (
         <div className="relative border-l-2 border-surface-variant ml-4 pl-lg space-y-lg">
-          {logs.map((log) => (
+          {filteredLogs.map((log) => (
             <div key={log.id} className="relative">
               {/* Timeline marker node dot */}
               <div className="absolute -left-[33px] top-1.5 w-4 h-4 rounded-full bg-primary border-4 border-background shadow-md"></div>
@@ -62,7 +82,7 @@ export const ActivityTimeline: React.FC = () => {
         </div>
       ) : (
         <div className="py-xl text-center text-on-surface-variant font-body-md">
-          No audit entries recorded in database.
+          {searchQuery ? "No matching audit entries found." : "No audit entries recorded in database."}
         </div>
       )}
     </div>

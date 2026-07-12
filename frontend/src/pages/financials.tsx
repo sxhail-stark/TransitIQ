@@ -36,6 +36,20 @@ export const Financials: React.FC = () => {
   });
   const [expenseError, setExpenseError] = useState<string | null>(null);
 
+  // Expenses filter state
+  const [expenseFilter, setExpenseFilter] = useState("all");
+
+  const getVehicleName = (vId: string) => {
+    const v = vehicles.find((veh) => veh.id === vId);
+    return v ? `${v.name} (${v.registration_number})` : "General/Office";
+  };
+
+  const filteredExpenses = expenses.filter((e) => {
+    if (expenseFilter === "vehicle") return !!e.vehicle_id;
+    if (expenseFilter === "general") return !e.vehicle_id;
+    return true;
+  });
+
   const loadData = async () => {
     setIsLoading(true);
     try {
@@ -139,12 +153,149 @@ export const Financials: React.FC = () => {
   };
 
   const handleExportCSV = () => {
-    // Standard triggers a CSV download endpoint on backend
-    window.open("http://localhost:8000/api/v1/financials/export/csv", "_blank");
+    let csvContent = "data:text/csv;charset=utf-8,";
+    
+    if (activeTab === "expenses") {
+      csvContent += "Category,Description,Amount,Date,Type\n";
+      filteredExpenses.forEach((e) => {
+        const row = [
+          e.category,
+          `"${e.description.replace(/"/g, '""')}"`,
+          e.amount,
+          new Date(e.date).toLocaleDateString(),
+          e.vehicle_id ? "Vehicle Expense" : "General Expense"
+        ].join(",");
+        csvContent += row + "\n";
+      });
+    } else {
+      csvContent += "Refill Date,Vehicle,Location,Volume (Liters),Total Cost,Odometer (km),Unit Price ($/L)\n";
+      fuelLogs.forEach((f) => {
+        const row = [
+          new Date(f.date).toLocaleDateString(),
+          `"${getVehicleName(f.vehicle_id).replace(/"/g, '""')}"`,
+          `"${f.location.replace(/"/g, '""')}"`,
+          f.quantity,
+          f.cost,
+          f.odometer,
+          (f.cost / f.quantity).toFixed(2)
+        ].join(",");
+        csvContent += row + "\n";
+      });
+    }
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `transitiq_${activeTab}_report_${new Date().toISOString().split("T")[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const handleExportPDF = () => {
-    alert("Exporting secure financial reports to PDF... Download starting shortly.");
+    const printWindow = window.open("", "_blank");
+    if (!printWindow) return;
+
+    let html = `
+      <html>
+      <head>
+        <title>TransitIQ Financial Report</title>
+        <style>
+          body { font-family: sans-serif; background: #fff; color: #111; padding: 20px; }
+          h1 { color: #D98A16; font-size: 24px; margin-bottom: 5px; }
+          p { font-size: 12px; color: #555; }
+          table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+          th, td { border: 1px solid #ddd; padding: 8px; text-align: left; font-size: 12px; }
+          th { background-color: #f2f2f2; font-weight: bold; }
+          tr:nth-child(even) { background-color: #f9f9f9; }
+          .total { font-weight: bold; text-align: right; margin-top: 15px; font-size: 14px; }
+        </style>
+      </head>
+      <body>
+        <h1>TransitIQ Financial Ledger Report</h1>
+        <p>Generated on: ${new Date().toLocaleString()} | Report Type: ${activeTab === "expenses" ? "Operating Expenses" : "Fuel Registries"}</p>
+        <table>
+    `;
+
+    if (activeTab === "expenses") {
+      html += `
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+        <tbody>
+      `;
+      let total = 0;
+      filteredExpenses.forEach((e) => {
+        total += e.amount;
+        html += `
+          <tr>
+            <td>${e.category.toUpperCase()}</td>
+            <td>${e.description}</td>
+            <td>$${e.amount.toFixed(2)}</td>
+            <td>${new Date(e.date).toLocaleDateString()}</td>
+            <td>${e.vehicle_id ? "Vehicle Expense" : "General Office Expense"}</td>
+          </tr>
+        `;
+      });
+      html += `
+        </tbody>
+        </table>
+        <div class="total">Total Expense: $${total.toFixed(2)}</div>
+      `;
+    } else {
+      html += `
+        <thead>
+          <tr>
+            <th>Refill Date</th>
+            <th>Vehicle</th>
+            <th>Location</th>
+            <th>Volume</th>
+            <th>Total Cost</th>
+            <th>Odometer</th>
+            <th>Unit Price</th>
+          </tr>
+        </thead>
+        <tbody>
+      `;
+      let totalCost = 0;
+      let totalQty = 0;
+      fuelLogs.forEach((f) => {
+        totalCost += f.cost;
+        totalQty += f.quantity;
+        html += `
+          <tr>
+            <td>${new Date(f.date).toLocaleDateString()}</td>
+            <td>${getVehicleName(f.vehicle_id)}</td>
+            <td>${f.location}</td>
+            <td>${f.quantity} L</td>
+            <td>$${f.cost.toFixed(2)}</td>
+            <td>${f.odometer.toLocaleString()} km</td>
+            <td>$${(f.cost / f.quantity).toFixed(2)}/L</td>
+          </tr>
+        `;
+      });
+      html += `
+        </tbody>
+        </table>
+        <div class="total">Total Fuel Cost: $${totalCost.toFixed(2)} (Total Volume: ${totalQty.toFixed(1)} L)</div>
+      `;
+    }
+
+    html += `
+      </body>
+      </html>
+    `;
+
+    printWindow.document.write(html);
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
   };
 
   return (
@@ -208,6 +359,18 @@ export const Financials: React.FC = () => {
 
         {/* Buttons actions */}
         <div className="flex flex-wrap items-center gap-sm">
+          {activeTab === "expenses" && (
+            <select
+              value={expenseFilter}
+              onChange={(e) => setExpenseFilter(e.target.value)}
+              className="bg-surface-container-low border border-surface-variant rounded-md py-2 px-3 text-on-background focus:outline-none focus:border-primary text-body-md cursor-pointer"
+            >
+              <option value="all">All Expenses</option>
+              <option value="vehicle">Vehicle Expenses</option>
+              <option value="general">General Office Expenses</option>
+            </select>
+          )}
+
           <button
             onClick={handleExportCSV}
             className="px-md py-2 border border-surface-variant hover:bg-surface-container text-on-background font-semibold text-body-md rounded cursor-pointer transition-colors flex items-center gap-xs"
@@ -244,7 +407,7 @@ export const Financials: React.FC = () => {
         </div>
       ) : activeTab === "expenses" ? (
         /* Expenses Table */
-        expenses.length > 0 ? (
+        filteredExpenses.length > 0 ? (
           <div className="bg-surface-container border border-surface-variant rounded-xl overflow-hidden shadow-md">
             <table className="w-full text-left border-collapse">
               <thead>
@@ -253,11 +416,11 @@ export const Financials: React.FC = () => {
                   <th className="p-md">Description</th>
                   <th className="p-md">Amount</th>
                   <th className="p-md">Date</th>
-                  <th className="p-md">Vehicle ID</th>
+                  <th className="p-md">Vehicle</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-surface-variant font-body-md">
-                {expenses.map((e) => (
+                {filteredExpenses.map((e) => (
                   <tr key={e.id} className="hover:bg-surface-container-low transition-colors">
                     <td className="p-md">
                       <span className="inline-block px-2.5 py-0.5 rounded text-[11px] font-bold uppercase border border-surface-variant bg-surface-container-high">
@@ -267,7 +430,7 @@ export const Financials: React.FC = () => {
                     <td className="p-md font-semibold text-on-background">{e.description}</td>
                     <td className="p-md text-error font-bold">-${e.amount?.toFixed(2)}</td>
                     <td className="p-md text-on-surface-variant">{new Date(e.date).toLocaleDateString()}</td>
-                    <td className="p-md text-on-surface-variant text-sm">{e.vehicle_id ? "Assigned" : "General"}</td>
+                    <td className="p-md text-on-surface-variant text-sm font-semibold">{getVehicleName(e.vehicle_id)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -286,6 +449,7 @@ export const Financials: React.FC = () => {
               <thead>
                 <tr className="bg-surface-container-high border-b border-surface-variant text-on-surface-variant font-label-md text-label-md">
                   <th className="p-md">Refill Date</th>
+                  <th className="p-md">Vehicle</th>
                   <th className="p-md">Location</th>
                   <th className="p-md">Volume</th>
                   <th className="p-md">Total Cost</th>
@@ -297,6 +461,7 @@ export const Financials: React.FC = () => {
                 {fuelLogs.map((f) => (
                   <tr key={f.id} className="hover:bg-surface-container-low transition-colors">
                     <td className="p-md font-semibold">{new Date(f.date).toLocaleDateString()}</td>
+                    <td className="p-md text-on-background text-sm font-semibold">{getVehicleName(f.vehicle_id)}</td>
                     <td className="p-md text-on-background">{f.location}</td>
                     <td className="p-md">{f.quantity} Liters</td>
                     <td className="p-md font-bold text-primary">${f.cost?.toFixed(2)}</td>

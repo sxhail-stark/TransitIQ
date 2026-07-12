@@ -157,22 +157,7 @@ export const Settings: React.FC = () => {
         </form>
       </div>
 
-      {/* Global Interface Preference */}
-      <div className="border-t border-surface-variant/40 pt-lg mt-lg space-y-md">
-        <h4 className="font-semibold text-on-background text-[15px] flex items-center gap-sm">
-          <span className="material-symbols-outlined text-emerald-400 text-[20px]">palette</span>
-          <span>Workspace Preferences</span>
-        </h4>
-        <div className="flex items-center justify-between p-md rounded bg-surface-container-low border border-surface-variant">
-          <div>
-            <h5 className="font-semibold text-on-background text-sm">Aesthetics Dark-Mode</h5>
-            <p className="text-xs text-on-surface-variant mt-xs">TransitIQ workspace layout lock to dark theme variables.</p>
-          </div>
-          <span className="px-lg py-1 bg-surface-container-high rounded text-primary text-xs uppercase font-bold border border-surface-variant select-none">
-            Locked Dark
-          </span>
-        </div>
-      </div>
+
     </div>
   );
 };

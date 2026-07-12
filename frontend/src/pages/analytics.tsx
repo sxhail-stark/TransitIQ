@@ -69,22 +69,7 @@ export const Analytics: React.FC = () => {
           </select>
         </div>
 
-        <div className="flex gap-sm">
-          <button
-            onClick={() => handleDownloadReport("csv")}
-            className="px-md py-2 border border-surface-variant hover:bg-surface-container text-on-background font-semibold text-body-md rounded cursor-pointer transition-colors flex items-center gap-xs"
-          >
-            <span className="material-symbols-outlined text-[18px]">table_rows</span>
-            <span>CSV Export</span>
-          </button>
-          <button
-            onClick={() => handleDownloadReport("pdf")}
-            className="px-md py-2 border border-surface-variant hover:bg-surface-container text-on-background font-semibold text-body-md rounded cursor-pointer transition-colors flex items-center gap-xs"
-          >
-            <span className="material-symbols-outlined text-[18px]">picture_as_pdf</span>
-            <span>PDF Summary</span>
-          </button>
-        </div>
+
       </div>
 
       {isLoading ? (

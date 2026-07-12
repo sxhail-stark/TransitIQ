@@ -1,11 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { api } from "../lib/api";
+import { useAuth } from "../context/AuthContext";
 
 export const Fleet: React.FC = () => {
+  const { user } = useAuth();
+  const isManager = user?.role === "Fleet Manager";
+
   const [vehicles, setVehicles] = useState<any[]>([]);
   const [drivers, setDrivers] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  // Document Management Modal State
+  const [isDocModalOpen, setIsDocModalOpen] = useState(false);
+  const [selectedVehicle, setSelectedVehicle] = useState<any>(null);
+  const [vehicleDocs, setVehicleDocs] = useState<any[]>([]);
+  const [uploadDocType, setUploadDocType] = useState("insurance");
+  const [uploadDocName, setUploadDocName] = useState("");
+  const [uploadDocExpiry, setUploadDocExpiry] = useState("");
+  const [uploadFileBase64, setUploadFileBase64] = useState("");
+  const [docError, setDocError] = useState<string | null>(null);
   
   // Filters state
   const [statusFilter, setStatusFilter] = useState("");
@@ -100,6 +114,56 @@ export const Fleet: React.FC = () => {
     }
   };
 
+  const handleManageDocs = async (vehicle: any) => {
+    setSelectedVehicle(vehicle);
+    setDocError(null);
+    setUploadDocName("");
+    setUploadDocExpiry("");
+    setUploadFileBase64("");
+    setVehicleDocs(vehicle.documents || []);
+    setIsDocModalOpen(true);
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.type !== "application/pdf") {
+      setDocError("Only PDF documents are allowed");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setUploadFileBase64(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleUploadDoc = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setDocError(null);
+
+    if (!uploadDocName.trim() || !uploadDocExpiry || !uploadFileBase64) {
+      setDocError("Name, expiry date, and PDF file are required");
+      return;
+    }
+
+    try {
+      const newDoc = await api.post(`/vehicles/${selectedVehicle.id}/documents`, {
+        doc_type: uploadDocType,
+        doc_name: uploadDocName,
+        file_path: uploadFileBase64,
+        expiry_date: new Date(uploadDocExpiry).toISOString()
+      });
+      setVehicleDocs((prev) => [...prev, newDoc]);
+      setUploadDocName("");
+      setUploadDocExpiry("");
+      setUploadFileBase64("");
+      loadData();
+    } catch (err: any) {
+      setDocError(err.message || "Failed to upload document");
+    }
+  };
+
   // Filter vehicles list
   const filteredVehicles = vehicles.filter((v) => {
     const matchesStatus = statusFilter === "" || v.status === statusFilter;
@@ -149,13 +213,15 @@ export const Fleet: React.FC = () => {
         </div>
 
         {/* Add trigger */}
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="bg-primary text-black font-semibold px-lg py-2 rounded hover:bg-primary-container transition-colors flex items-center gap-sm cursor-pointer shadow-md self-start md:self-auto"
-        >
-          <span className="material-symbols-outlined text-[20px]">add</span>
-          <span>Add Vehicle</span>
-        </button>
+        {isManager && (
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="bg-primary text-black font-semibold px-lg py-2 rounded hover:bg-primary-container transition-colors flex items-center gap-sm cursor-pointer shadow-md self-start md:self-auto"
+          >
+            <span className="material-symbols-outlined text-[20px]">add</span>
+            <span>Add Vehicle</span>
+          </button>
+        )}
       </div>
 
       {/* Vehicles Table */}
@@ -176,6 +242,7 @@ export const Fleet: React.FC = () => {
                 <th className="p-md">Status</th>
                 <th className="p-md">Health</th>
                 <th className="p-md">Driver</th>
+                <th className="p-md">Certificates</th>
                 <th className="p-md text-right">Actions</th>
               </tr>
             </thead>
@@ -229,6 +296,16 @@ export const Fleet: React.FC = () => {
                   <td className="p-md text-on-surface-variant text-sm">
                     {v.current_driver?.full_name || "Unassigned"}
                   </td>
+                  {/* Certificates (PDF) */}
+                  <td className="p-md">
+                    <button
+                      onClick={() => handleManageDocs(v)}
+                      className="text-primary hover:text-primary-container flex items-center gap-xs cursor-pointer font-semibold text-xs"
+                    >
+                      <span className="material-symbols-outlined text-[16px]">picture_as_pdf</span>
+                      <span>PDF Docs</span>
+                    </button>
+                  </td>
                   {/* Actions */}
                   <td className="p-md text-right space-x-sm">
                     <Link
@@ -237,12 +314,14 @@ export const Fleet: React.FC = () => {
                     >
                       Profile
                     </Link>
-                    <button
-                      onClick={() => handleDelete(v.id)}
-                      className="px-3 py-1 bg-error-container/10 hover:bg-error-container/20 rounded border border-error/20 text-error font-label-md text-[12px] transition-colors cursor-pointer"
-                    >
-                      Delete
-                    </button>
+                    {isManager && (
+                      <button
+                        onClick={() => handleDelete(v.id)}
+                        className="px-3 py-1 bg-error-container/10 hover:bg-error-container/20 rounded border border-error/20 text-error font-label-md text-[12px] transition-colors cursor-pointer"
+                      >
+                        Delete
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -422,6 +501,144 @@ export const Fleet: React.FC = () => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Document Management Modal */}
+      {isDocModalOpen && selectedVehicle && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-50 p-md font-sans">
+          <div className="w-full max-w-md glass-panel-heavy rounded-xl p-xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-surface-variant flex flex-col gap-lg max-h-[85vh] overflow-y-auto">
+            <div className="flex justify-between items-center border-b border-surface-variant pb-md">
+              <div>
+                <h3 className="font-headline-md text-title-md text-on-background">Vehicle Documents</h3>
+                <p className="text-xs text-on-surface-variant mt-xs">Reg: {selectedVehicle.registration_number}</p>
+              </div>
+              <button
+                onClick={() => setIsDocModalOpen(false)}
+                className="text-on-surface-variant hover:text-on-background transition-colors cursor-pointer"
+              >
+                <span className="material-symbols-outlined text-[24px]">close</span>
+              </button>
+            </div>
+
+            {/* List of Documents */}
+            <div className="flex flex-col gap-sm border-b border-surface-variant/40 pb-md">
+              <h4 className="font-semibold text-xs text-on-background uppercase tracking-wider">Current Uploaded PDFs</h4>
+              {vehicleDocs.length > 0 ? (
+                <div className="space-y-xs">
+                  {vehicleDocs.map((doc) => (
+                    <div
+                      key={doc.id}
+                      className="p-sm rounded bg-surface-container-low border border-surface-variant hover:border-primary/40 transition-colors flex justify-between items-center"
+                    >
+                      <div className="flex items-center gap-xs">
+                        <span className="material-symbols-outlined text-[20px] text-primary">picture_as_pdf</span>
+                        <div>
+                          <span className="font-semibold text-xs text-on-background block">{doc.doc_name}</span>
+                          <span className="text-[10px] text-on-surface-variant uppercase tracking-wider block">
+                            Type: {doc.doc_type} • Exp: {new Date(doc.expiry_date).toLocaleDateString()}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Click to open document in new tab */}
+                      <button
+                        onClick={() => {
+                          const w = window.open();
+                          if (w) {
+                            w.document.write(
+                              `<html><head><title>${doc.doc_name}</title></head>` +
+                              `<body style="margin:0;"><embed width="100%" height="100%" src="${doc.file_path}" type="application/pdf" /></body></html>`
+                            );
+                            w.document.close();
+                          }
+                        }}
+                        className="px-2 py-1 bg-surface-container-high hover:bg-surface-variant border border-surface-variant text-[11px] font-semibold text-on-background rounded flex items-center gap-xs cursor-pointer"
+                      >
+                        <span className="material-symbols-outlined text-[14px]">open_in_new</span>
+                        <span>Open</span>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-xs text-on-surface-variant text-center py-md border border-dashed border-surface-variant rounded">
+                  No verification documents uploaded.
+                </p>
+              )}
+            </div>
+
+            {/* Upload form for Fleet Managers */}
+            {isManager ? (
+              <form onSubmit={handleUploadDoc} className="flex flex-col gap-md">
+                <h4 className="font-semibold text-xs text-on-background uppercase tracking-wider">Upload New PDF Certificate</h4>
+                {docError && (
+                  <div className="p-sm rounded bg-error-container/20 border border-error text-error text-xs">
+                    {docError}
+                  </div>
+                )}
+
+                <div className="flex flex-col gap-xs">
+                  <label className="text-[11px] text-on-surface-variant">Document Type</label>
+                  <select
+                    className="w-full bg-surface-container-low border border-surface-variant rounded py-1.5 px-3 text-xs text-on-background cursor-pointer"
+                    value={uploadDocType}
+                    onChange={(e) => setUploadDocType(e.target.value)}
+                  >
+                    <option value="insurance">Insurance Policy</option>
+                    <option value="fitness">Road Fitness Certificate</option>
+                    <option value="rc">Registration Certificate (RC)</option>
+                  </select>
+                </div>
+
+                <div className="flex flex-col gap-xs">
+                  <label className="text-[11px] text-on-surface-variant">Document Name</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. Q3 Insurance Policy"
+                    className="w-full bg-surface-container-low border border-surface-variant rounded py-1.5 px-3 text-xs text-on-background"
+                    value={uploadDocName}
+                    onChange={(e) => setUploadDocName(e.target.value)}
+                  />
+                </div>
+
+                <div className="flex flex-col gap-xs">
+                  <label className="text-[11px] text-on-surface-variant">Expiry Date</label>
+                  <input
+                    type="date"
+                    required
+                    className="w-full bg-surface-container-low border border-surface-variant rounded py-1.5 px-3 text-xs text-on-background"
+                    value={uploadDocExpiry}
+                    onChange={(e) => setUploadDocExpiry(e.target.value)}
+                  />
+                </div>
+
+                <div className="flex flex-col gap-xs">
+                  <label className="text-[11px] text-on-surface-variant">Select PDF File</label>
+                  <input
+                    type="file"
+                    required
+                    accept="application/pdf"
+                    onChange={handleFileChange}
+                    className="w-full bg-surface-container-low border border-surface-variant rounded py-1 px-3 text-xs text-on-background"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full bg-primary hover:bg-primary-container text-black font-semibold py-2 rounded text-xs transition-colors flex items-center justify-center gap-xs cursor-pointer shadow-md mt-sm"
+                >
+                  <span className="material-symbols-outlined text-[16px]">upload</span>
+                  <span>Upload Document</span>
+                </button>
+              </form>
+            ) : (
+              <p className="text-xs text-on-surface-variant text-center">
+                * Uploading/removing certificates requires Fleet Manager access permissions.
+              </p>
+            )}
           </div>
         </div>
       )}

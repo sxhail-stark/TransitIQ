@@ -16,7 +16,6 @@ import { Maintenance } from "./pages/maintenance";
 import { Financials } from "./pages/financials";
 import { Analytics } from "./pages/analytics";
 import { AIAssistant } from "./pages/ai_assistant";
-import { LiveMap } from "./pages/live_map";
 import { ActivityTimeline } from "./pages/activity";
 import { Notifications } from "./pages/notifications";
 import { Settings } from "./pages/settings";
@@ -51,7 +50,6 @@ export default function App() {
               <Route path="/financials" element={<Financials />} />
               <Route path="/analytics" element={<Analytics />} />
               <Route path="/ai-assistant" element={<AIAssistant />} />
-              <Route path="/map" element={<LiveMap />} />
               <Route path="/activity" element={<ActivityTimeline />} />
               <Route path="/notifications" element={<Notifications />} />
               <Route path="/settings" element={<Settings />} />

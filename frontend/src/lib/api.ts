@@ -408,21 +408,50 @@ function getMockFallback(endpoint: string) {
 }
 
 function handleMockPost(endpoint: string, body: any, originalErr: string) {
+  if (endpoint === "/auth/register") {
+    return {
+      id: `mock-u-${uuid()}`,
+      email: body.email,
+      full_name: body.full_name,
+      role: body.role,
+      is_active: true
+    };
+  }
+
   if (endpoint === "/auth/login") {
-    // Validate custom mockup users
-    const validEmails = ["manager@transitiq.com", "dispatcher@transitiq.com", "safety@transitiq.com", "finance@transitiq.com", "driver1@transitiq.com"];
-    if (validEmails.includes(body.email) && body.password === "password123") {
-      const name = body.email.split("@")[0].toUpperCase();
+    if (body.password === "password123") {
+      const name = body.email.split("@")[0];
+      const displayName = name.charAt(0).toUpperCase() + name.slice(1);
       return {
         access_token: "mock-jwt-token-12345",
         token_type: "bearer",
         role: body.role,
-        user_id: `u-${body.role.replace(" ", "")}`,
+        user_id: `mock-u-${body.role.replace(/\s+/g, "")}`,
         email: body.email,
-        full_name: `${name} Agent`
+        full_name: `${displayName} (${body.role})`
       };
     }
-    throw new Error(originalErr || "Invalid email or password");
+    throw new Error(originalErr || "Invalid credentials. Please verify password.");
+  }
+
+  if (endpoint.startsWith("/vehicles/") && endpoint.endsWith("/documents")) {
+    const vId = endpoint.split("/")[2];
+    const vehicle = mockState.vehicles.find((v: any) => v.id === vId);
+    const newDoc = {
+      id: `mock-doc-${uuid()}`,
+      vehicle_id: vId,
+      doc_type: body.doc_type,
+      doc_name: body.doc_name,
+      file_path: body.file_path,
+      expiry_date: body.expiry_date,
+      created_at: new Date().toISOString()
+    };
+    if (vehicle) {
+      if (!vehicle.documents) vehicle.documents = [];
+      vehicle.documents.push(newDoc);
+    }
+    logActivity("vehicle_document_added", `Document '${body.doc_name}' uploaded for vehicle ${vehicle?.registration_number}`);
+    return newDoc;
   }
 
   const newObj = { id: `mock-${uuid()}`, ...body, created_at: new Date().toISOString(), documents: [] };

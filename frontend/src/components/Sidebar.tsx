@@ -21,11 +21,33 @@ export const Sidebar: React.FC = () => {
     { name: "Financials", path: "/financials", icon: "payments" },
     { name: "Analytics", path: "/analytics", icon: "analytics" },
     { name: "AI Assistant", path: "/ai-assistant", icon: "smart_toy" },
-    { name: "Live Map", path: "/map", icon: "map" },
     { name: "Activity", path: "/activity", icon: "history" },
     { name: "Notifications", path: "/notifications", icon: "notifications" },
     { name: "Settings", path: "/settings", icon: "settings" }
   ];
+
+  const getFilteredNavItems = () => {
+    if (!user) return [];
+    const role = user.role;
+    if (role === "Financial Analyst") {
+      return navItems.filter((item) =>
+        ["Dashboard", "Financials", "Settings", "AI Assistant"].includes(item.name)
+      );
+    }
+    if (role === "Driver" || role === "Dispatcher") {
+      return navItems.filter((item) =>
+        ["Dashboard", "Trips (Dispatcher)", "AI Assistant"].includes(item.name)
+      );
+    }
+    if (role === "Safety Officer") {
+      return navItems.filter((item) =>
+        ["Dashboard", "Fleet Registry", "Drivers", "Notifications", "AI Assistant"].includes(item.name)
+      );
+    }
+    return navItems; // Fleet Manager has full access
+  };
+
+  const filteredNavItems = getFilteredNavItems();
 
   return (
     <div className="w-sidebar-width h-screen bg-surface-dim border-r border-surface-variant flex flex-col justify-between select-none">
@@ -38,7 +60,7 @@ export const Sidebar: React.FC = () => {
 
         {/* Navigation List */}
         <nav className="flex flex-col gap-xs p-md overflow-y-auto max-h-[calc(100vh-180px)]">
-          {navItems.map((item) => (
+          {filteredNavItems.map((item) => (
             <NavLink
               key={item.path}
               to={item.path}
