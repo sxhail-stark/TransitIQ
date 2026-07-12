@@ -282,13 +282,13 @@ The dashboard provides a real-time view of fleet operations.
 
 ### KPI Cards
 
-- 🚚 Active Vehicles
-- ✅ Available Vehicles
-- 🔧 Vehicles in Maintenance
-- 🛣️ Active Trips
-- ⏳ Pending Trips
-- 👨‍✈️ Drivers On Duty
-- 📈 Fleet Utilization %
+-  Active Vehicles
+-  Available Vehicles
+-  Vehicles in Maintenance
+-  Active Trips
+-  Pending Trips
+-  Drivers On Duty
+-  Fleet Utilization %
 
 ### Filters
 
