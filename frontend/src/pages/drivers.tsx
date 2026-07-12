@@ -311,7 +311,7 @@ export const Drivers: React.FC = () => {
                   type="submit"
                   className="px-lg py-2 bg-primary hover:bg-primary-container text-black font-semibold rounded cursor-pointer transition-colors"
                 >
-                  Add Driver
+                  Add New Driver
                 </button>
               </div>
             </form>
