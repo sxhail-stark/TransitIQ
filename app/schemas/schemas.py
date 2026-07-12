@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import List, Optional, Any, Dict
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field, field_validator
 
 # --- Token & Authentication ---
 class Token(BaseModel):
@@ -82,12 +82,20 @@ class DriverDocumentResponse(DriverDocumentBase):
 # --- Driver Schemas ---
 class DriverBase(BaseModel):
     full_name: str
+    email: Optional[str] = None
     license_number: str
     license_expiry: datetime
     phone: str
     photo_url: Optional[str] = None
     experience_years: int
     status: Optional[str] = "available"
+
+    @field_validator("license_number")
+    @classmethod
+    def validate_license(cls, v: str) -> str:
+        if not v.isalnum() or len(v) != 16:
+            raise ValueError("License number must be exactly a 16-character alphanumeric code")
+        return v
 
 class DriverCreate(DriverBase):
     user_id: Optional[str] = None

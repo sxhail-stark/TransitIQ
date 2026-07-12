@@ -80,6 +80,7 @@ class Driver(Base):
     
     id = Column(String(36), primary_key=True, default=generate_uuid)
     full_name = Column(String(255), nullable=False)
+    email = Column(String(255), unique=True, nullable=True, index=True)
     license_number = Column(String(100), unique=True, nullable=False, index=True)
     license_expiry = Column(DateTime, nullable=False)
     phone = Column(String(20), nullable=False)

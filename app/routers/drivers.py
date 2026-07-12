@@ -46,7 +46,31 @@ def create_driver(
     if existing:
         raise HTTPException(status_code=400, detail="Driver with this license number already exists")
         
-    db_obj = driver_repo.create(db, obj_in=driver_in.dict(exclude_unset=True))
+    if not driver_in.email:
+        raise HTTPException(status_code=400, detail="Driver email is required to register a login account")
+        
+    from app.models.models import User
+    existing_user = db.query(User).filter(User.email == driver_in.email).first()
+    if existing_user:
+        raise HTTPException(status_code=400, detail="A user with this email address already exists")
+        
+    # 1. Create the associated login User
+    new_user = User(
+        email=driver_in.email,
+        full_name=driver_in.full_name,
+        hashed_password=get_password_hash("password123"),
+        role="Driver",
+        is_active=True
+    )
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+    
+    # 2. Create the Driver linked to user_id
+    driver_data = driver_in.dict(exclude_unset=True)
+    driver_data["user_id"] = new_user.id
+    
+    db_obj = driver_repo.create(db, obj_in=driver_data)
     
     # Calculate initial safety score
     SafetyScoreService.calculate_driver_score(db, db_obj.id)
@@ -57,7 +81,7 @@ def create_driver(
         action="driver_added",
         entity_type="driver",
         entity_id=db_obj.id,
-        description=f"Driver {db_obj.full_name} (License: {db_obj.license_number}) added to fleet"
+        description=f"Driver {db_obj.full_name} (Email: {db_obj.email}) added to fleet"
     )
     db.add(activity)
     db.commit()

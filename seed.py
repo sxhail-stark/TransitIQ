@@ -60,6 +60,20 @@ def seed_db():
                 full_name="Jane Smith",
                 role="Driver",
                 is_active=True
+            ),
+            User(
+                email="driver3@transitiq.com",
+                hashed_password=get_password_hash("password123"),
+                full_name="Robert Miller",
+                role="Driver",
+                is_active=True
+            ),
+            User(
+                email="driver4@transitiq.com",
+                hashed_password=get_password_hash("password123"),
+                full_name="David Davis",
+                role="Driver",
+                is_active=True
             )
         ]
         for u in users:
@@ -70,13 +84,16 @@ def seed_db():
         mgr = db.query(User).filter(User.email == "manager@transitiq.com").first()
         drv_user_1 = db.query(User).filter(User.email == "driver1@transitiq.com").first()
         drv_user_2 = db.query(User).filter(User.email == "driver2@transitiq.com").first()
+        drv_user_3 = db.query(User).filter(User.email == "driver3@transitiq.com").first()
+        drv_user_4 = db.query(User).filter(User.email == "driver4@transitiq.com").first()
 
         print("Seeding drivers...")
         drivers = [
             Driver(
                 id=str(uuid.uuid4()),
                 full_name="John Doe",
-                license_number="DL-92847194",
+                email="driver1@transitiq.com",
+                license_number="DL92847194ABCDEF",
                 license_expiry=datetime.utcnow() + timedelta(days=45),
                 phone="+1 (555) 123-4567",
                 experience_years=8,
@@ -89,7 +106,8 @@ def seed_db():
             Driver(
                 id=str(uuid.uuid4()),
                 full_name="Jane Smith",
-                license_number="DL-10928475",
+                email="driver2@transitiq.com",
+                license_number="DL10928475ABCDEF",
                 license_expiry=datetime.utcnow() + timedelta(days=120),
                 phone="+1 (555) 987-6543",
                 experience_years=5,
@@ -102,26 +120,30 @@ def seed_db():
             Driver(
                 id=str(uuid.uuid4()),
                 full_name="Robert Miller",
-                license_number="DL-83749281",
+                email="driver3@transitiq.com",
+                license_number="DL83749281ABCDEF",
                 license_expiry=datetime.utcnow() + timedelta(days=12),  # Warning status
                 phone="+1 (555) 456-7890",
                 experience_years=12,
                 status="available",
                 safety_score=97,
                 trips_completed=114,
-                incidents_count=0
+                incidents_count=0,
+                user_id=drv_user_3.id
             ),
             Driver(
                 id=str(uuid.uuid4()),
                 full_name="David Davis",
-                license_number="DL-47391028",
+                email="driver4@transitiq.com",
+                license_number="DL47391028ABCDEF",
                 license_expiry=datetime.utcnow() - timedelta(days=5),  # Expired license
                 phone="+1 (555) 321-7654",
                 experience_years=3,
                 status="suspended",
                 safety_score=60,
                 trips_completed=15,
-                incidents_count=3
+                incidents_count=3,
+                user_id=drv_user_4.id
             )
         ]
         for d in drivers:
