@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TransitIQ - Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary": "#00344b",
+                      "on-secondary": "#05297a",
+                      "on-primary-fixed-variant": "#663d00",
+                      "error": "#ffb4ab",
+                      "surface-variant": "#333539",
+                      "surface-tint": "#ffb865",
+                      "outline-variant": "#534435",
+                      "primary-fixed-dim": "#ffb865",
+                      "on-secondary-container": "#9db2ff",
+                      "primary": "#ffb865",
+                      "on-surface-variant": "#d8c3af",
+                      "tertiary": "#83cfff",
+                      "inverse-on-surface": "#2f3035",
+                      "on-tertiary-fixed-variant": "#004c6b",
+                      "primary-fixed": "#ffddba",
+                      "secondary-fixed": "#dce1ff",
+                      "on-tertiary-container": "#003750",
+                      "tertiary-container": "#1ca6e3",
+                      "surface-dim": "#111317",
+                      "surface-container-highest": "#333539",
+                      "on-tertiary-fixed": "#001e2d",
+                      "on-error-container": "#ffdad6",
+                      "surface-bright": "#37393e",
+                      "on-primary": "#482a00",
+                      "on-secondary-fixed": "#00164e",
+                      "tertiary-fixed": "#c6e7ff",
+                      "surface-container-high": "#282a2e",
+                      "on-surface": "#e2e2e8",
+                      "outline": "#a08e7b",
+                      "on-primary-container": "#4c2c00",
+                      "surface": "#111317",
+                      "on-secondary-fixed-variant": "#264191",
+                      "surface-container-lowest": "#0c0e12",
+                      "background": "#111317",
+                      "primary-container": "#d98a16",
+                      "inverse-primary": "#875200",
+                      "secondary-container": "#264191",
+                      "surface-container-low": "#1a1c20",
+                      "secondary-fixed-dim": "#b6c4ff",
+                      "on-error": "#690005",
+                      "on-primary-fixed": "#2b1700",
+                      "surface-container": "#1e2024",
+                      "inverse-surface": "#e2e2e8",
+                      "tertiary-fixed-dim": "#83cfff",
+                      "secondary": "#b6c4ff",
+                      "error-container": "#93000a",
+                      "on-background": "#e2e2e8"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "sm": "8px",
+                      "base": "4px",
+                      "sidebar-width": "260px",
+                      "lg": "24px",
+                      "md": "16px",
+                      "container-max": "1440px",
+                      "xs": "4px",
+                      "xl": "32px",
+                      "2xl": "48px"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "display-lg": [
+                              "Inter"
+                      ],
+                      "title-md": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "code-sm": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "label-md": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "title-md": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "code-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-md": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        /* Glassmorphism utility */
+        .glass-panel {
+            background: rgba(22, 25, 30, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        /* Subtle glow animation for the brand side */
+        @keyframes subtleGlow {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
+        }
+        .animate-glow {
+            animation: subtleGlow 4s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex selection:bg-primary-container selection:text-on-primary-container">
+<!-- Split Layout Container -->
+<div class="w-full h-screen flex flex-col md:flex-row overflow-hidden relative z-10">
+<!-- Left Side: Brand Area (Hidden on mobile) -->
+<div class="hidden md:flex flex-col justify-between w-1/2 p-2xl relative bg-surface-dim overflow-hidden border-r border-surface-variant">
+<!-- Abstract Grid Background for Brand Side -->
+<div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: linear-gradient(to right, #333539 1px, transparent 1px), linear-gradient(to bottom, #333539 1px, transparent 1px); background-size: 40px 40px;"></div>
+<!-- Radial Glow -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[100px] pointer-events-none animate-glow"></div>
+<!-- Header / Logo -->
+<div class="z-10 flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary text-[32px]">route</span>
+<h1 class="font-headline-lg text-headline-lg text-on-background">TransitIQ</h1>
+</div>
+<!-- Central Illustration/Messaging -->
+<div class="z-10 flex flex-col gap-xl max-w-lg">
+<div class="w-full h-64 rounded-xl overflow-hidden relative border border-surface-variant shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+<div class="bg-cover bg-center w-full h-full" data-alt="A highly stylized, dark-themed digital illustration of a logistics network spanning a futuristic globe. Glowing orange and blue data streams represent active shipping routes. The aesthetic is corporate modern, 'mission control' style, with sharp technical precision and luminous layering against a deep space background. High contrast status indicators pulse gently. Professional and authoritative." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBLZg_TLg01KXO4iKHgQZfo7AxLQlqpiMacgaoxNBqip71A94IONgty4ETUzyFo4O9btH7oDPLdqSfmzSUwexa18mmp7we_xoDTy2H3MO_tO0oH7qKHIEVoC5oglFb_MGxBSvZviaUDXY_27AgNkBVPBhUPhEdZMzCXU-7vRmjsgAl5AKeCdr2iflZKv-VTKWQhOsK96AsqgJQTUynpd7hhRb8OwzM79TPXkmaXvdC932eu5MqMgG7yBk1eUsM9aht_OWnl7qnBIZU')"></div>
+</div>
+<div>
+<h2 class="font-display-lg text-display-lg text-on-background mb-md">Manage your fleet intelligently.</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Real-time situational awareness and precision analytics for high-stakes transport logistics. Secure access to your mission control.</p>
+</div>
+</div>
+<!-- Footer area for branding -->
+<div class="z-10 flex items-center gap-md font-label-md text-label-md text-on-surface-variant">
+<span>© 2024 TransitIQ Logistics</span>
+<span class="w-1 h-1 bg-surface-variant rounded-full"></span>
+<a class="hover:text-primary transition-colors" href="#">Privacy</a>
+<span class="w-1 h-1 bg-surface-variant rounded-full"></span>
+<a class="hover:text-primary transition-colors" href="#">Terms</a>
+</div>
+</div>
+<!-- Right Side: Login Form -->
+<div class="w-full md:w-1/2 flex items-center justify-center p-lg md:p-2xl relative bg-background">
+<!-- Mobile Logo (only visible on small screens) -->
+<div class="absolute top-lg left-lg md:hidden flex items-center gap-sm z-20">
+<span class="material-symbols-outlined text-primary text-[24px]">route</span>
+<span class="font-headline-md text-headline-md text-on-background">TransitIQ</span>
+</div>
+<!-- Login Card (Glassmorphism) -->
+<div class="w-full max-w-md glass-panel rounded-xl p-xl shadow-[0_4px_20px_rgba(0,0,0,0.5)] z-10 flex flex-col gap-lg">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-background">Welcome Back</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-sm">Authenticate to access fleet controls.</p>
+</div>
+<form class="flex flex-col gap-md" onsubmit="event.preventDefault();">
+<!-- Role Selector (Pill tabs) -->
+<div class="flex p-1 bg-surface-container-high rounded-lg mb-sm">
+<button class="flex-1 py-2 text-center rounded-md bg-surface-variant text-on-background font-label-md text-label-md shadow-sm transition-all border border-surface-variant" type="button">
+                            Fleet Manager
+                        </button>
+<button class="flex-1 py-2 text-center rounded-md text-on-surface-variant hover:text-on-background font-label-md text-label-md transition-all border border-transparent" type="button">
+                            Dispatcher
+                        </button>
+<button class="flex-1 py-2 text-center rounded-md text-on-surface-variant hover:text-on-background font-label-md text-label-md transition-all border border-transparent" type="button">
+                            Driver
+                        </button>
+</div>
+<!-- Email Input -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface" for="email">Email Address</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">mail</span>
+<input class="w-full bg-surface-container-low border border-surface-variant rounded-md py-2 pl-10 pr-3 text-on-background focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors font-body-md text-body-md placeholder-on-surface-variant/50" id="email" placeholder="agent@transitiq.com" type="email"/>
+</div>
+</div>
+<!-- Password Input -->
+<div class="flex flex-col gap-xs">
+<div class="flex justify-between items-center">
+<label class="font-label-md text-label-md text-on-surface" for="password">Password</label>
+<a class="font-label-md text-label-md text-primary hover:text-primary-fixed transition-colors" href="#">Forgot password?</a>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">lock</span>
+<input class="w-full bg-surface-container-low border border-surface-variant rounded-md py-2 pl-10 pr-10 text-on-background focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors font-body-md text-body-md" id="password" placeholder="••••••••" type="password"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">visibility_off</span>
+</button>
+</div>
+</div>
+<!-- Remember Me -->
+<div class="flex items-center gap-sm mt-xs">
+<input class="w-4 h-4 rounded border-surface-variant bg-surface-container-low text-primary focus:ring-primary focus:ring-offset-background" id="remember" type="checkbox"/>
+<label class="font-body-md text-body-md text-on-surface-variant cursor-pointer" for="remember">Remember me for 30 days</label>
+</div>
+<!-- Submit Button -->
+<button class="w-full bg-primary-container text-[#000000] font-title-md text-title-md py-3 rounded-md hover:bg-primary transition-colors mt-sm flex justify-center items-center gap-sm" type="submit">
+<span>Sign In</span>
+<span class="material-symbols-outlined text-[20px]">login</span>
+</button>
+</form>
+<!-- Divider -->
+<div class="flex items-center gap-md my-sm">
+<div class="h-px bg-surface-variant flex-1"></div>
+<span class="font-label-md text-label-md text-on-surface-variant uppercase">Or continue with</span>
+<div class="h-px bg-surface-variant flex-1"></div>
+</div>
+<!-- SSO Options -->
+<div class="grid grid-cols-2 gap-md">
+<button class="flex justify-center items-center gap-sm py-2 px-4 rounded-md border border-surface-variant bg-surface-container-low text-on-surface hover:bg-surface-container-high transition-colors font-title-md text-title-md">
+<span class="material-symbols-outlined text-[20px]">badge</span>
+                        Company SSO
+                    </button>
+<button class="flex justify-center items-center gap-sm py-2 px-4 rounded-md border border-surface-variant bg-surface-container-low text-on-surface hover:bg-surface-container-high transition-colors font-title-md text-title-md">
+<span class="material-symbols-outlined text-[20px]">vpn_key</span>
+                        Security Key
+                    </button>
+</div>
+</div>
+<!-- Decorational Corner Accents for Card -->
+<div class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-surface-variant/30 pointer-events-none md:hidden"></div>
+<div class="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-surface-variant/30 pointer-events-none md:hidden"></div>
+</div>
+</div>
+</body></html>

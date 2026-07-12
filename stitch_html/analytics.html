@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TransitIQ - Reports &amp; Analytics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#00344b",
+                        "on-secondary": "#05297a",
+                        "on-primary-fixed-variant": "#663d00",
+                        "error": "#ffb4ab",
+                        "surface-variant": "#333539",
+                        "surface-tint": "#ffb865",
+                        "outline-variant": "#534435",
+                        "primary-fixed-dim": "#ffb865",
+                        "on-secondary-container": "#9db2ff",
+                        "primary": "#ffb865",
+                        "on-surface-variant": "#d8c3af",
+                        "tertiary": "#83cfff",
+                        "inverse-on-surface": "#2f3035",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "primary-fixed": "#ffddba",
+                        "secondary-fixed": "#dce1ff",
+                        "on-tertiary-container": "#003750",
+                        "tertiary-container": "#1ca6e3",
+                        "surface-dim": "#111317",
+                        "surface-container-highest": "#333539",
+                        "on-tertiary-fixed": "#001e2d",
+                        "on-error-container": "#ffdad6",
+                        "surface-bright": "#37393e",
+                        "on-primary": "#482a00",
+                        "on-secondary-fixed": "#00164e",
+                        "tertiary-fixed": "#c6e7ff",
+                        "surface-container-high": "#282a2e",
+                        "on-surface": "#e2e2e8",
+                        "outline": "#a08e7b",
+                        "on-primary-container": "#4c2c00",
+                        "surface": "#111317",
+                        "on-secondary-fixed-variant": "#264191",
+                        "surface-container-lowest": "#0c0e12",
+                        "background": "#111317",
+                        "primary-container": "#d98a16",
+                        "inverse-primary": "#875200",
+                        "secondary-container": "#264191",
+                        "surface-container-low": "#1a1c20",
+                        "secondary-fixed-dim": "#b6c4ff",
+                        "on-error": "#690005",
+                        "on-primary-fixed": "#2b1700",
+                        "surface-container": "#1e2024",
+                        "inverse-surface": "#e2e2e8",
+                        "tertiary-fixed-dim": "#83cfff",
+                        "secondary": "#b6c4ff",
+                        "error-container": "#93000a",
+                        "on-background": "#e2e2e8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "base": "4px",
+                        "sidebar-width": "260px",
+                        "lg": "24px",
+                        "md": "16px",
+                        "container-max": "1440px",
+                        "xs": "4px",
+                        "xl": "32px",
+                        "2xl": "48px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "title-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "code-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "title-md": ["18px", { "lineHeight": "28px", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "code-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { background-color: #0F1115; color: #e2e2e8; }
+        .glass-panel {
+            background: rgba(22, 25, 30, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid #262B33;
+            border-top-color: rgba(255, 255, 255, 0.1);
+        }
+        .data-card { background: #16191E; border: 1px solid #262B33; }
+        /* Custom scrollbar for dark theme */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #0F1115; }
+        ::-webkit-scrollbar-thumb { background: #262B33; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #333539; }
+        .ai-glow { box-shadow: 0 0 15px rgba(30, 58, 138, 0.4); }
+    </style>
+</head>
+<body class="font-body-md text-body-md h-screen overflow-hidden flex bg-background">
+<!-- SideNavBar (JSON Component) -->
+<nav class="hidden md:flex flex-col h-full w-sidebar-width fixed left-0 top-0 bg-surface dark:bg-surface border-r border-outline-variant z-40">
+<div class="p-lg flex items-center gap-md border-b border-outline-variant">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center font-bold text-on-primary-container">
+<img class="w-full h-full object-cover rounded-full" data-alt="A futuristic geometric logo icon for a transport logistics company, featuring sharp intersecting lines in bright orange against a dark background, embodying speed, precision, and technological advancement in a modern corporate identity style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsLgFOPaNXl_7lokwx4PNCVRoGJgfMxtnMXo3MtFIBZSUq2_nMubkE2IU_UnwmZmNMbZlCds1fIyhTNjcaVJ7FW03C_QQQtmvCgtu9FpG8zRFEO2atyJE5EeVOZVFNzo4wOLzTUls_ZxdZ-TEH3fpnSZVrG5gynd3aLjMH9KkYXxm1-VC-M6Fu__qf_lhGu_EYgwNvfLmMspwN-YIU4TR1bisDX2YUkarEG6ObDhs9M2HA_Z_LSbSKcAeyuCAXp5WqfQy_BfIsnJA"/>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">TransitIQ</h1>
+<p class="font-label-md text-label-md text-on-surface-variant">Fleet Manager</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto py-sm">
+<ul class="flex flex-col gap-xs px-sm">
+<li><a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer active:scale-95 duration-200" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span> Dashboard</a></li>
+<li><a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer active:scale-95 duration-200" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">local_shipping</span> Fleet</a></li>
+<li><a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer active:scale-95 duration-200" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">person</span> Drivers</a></li>
+<li><a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer active:scale-95 duration-200" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">route</span> Trips</a></li>
+<li><a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer active:scale-95 duration-200" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">build</span> Maintenance</a></li>
+<li><a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer active:scale-95 duration-200" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">local_gas_station</span> Fuel &amp; Expenses</a></li>
+<li><a class="flex items-center gap-md px-md py-sm bg-primary-container/10 text-primary border-l-4 border-primary rounded-r-lg cursor-pointer active:scale-95 duration-200" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span> Analytics</a></li>
+<li><a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer active:scale-95 duration-200" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">smart_toy</span> AI Assistant</a></li>
+<li><a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer active:scale-95 duration-200" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span> Notifications</a></li>
+<li><a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer active:scale-95 duration-200" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span> Settings</a></li>
+</ul>
+</div>
+</nav>
+<!-- TopNavBar (JSON Component) -->
+<header class="h-16 fixed top-0 right-0 left-0 md:left-sidebar-width bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-outline-variant z-30 flex justify-between items-center px-lg">
+<div class="flex items-center gap-md">
+<!-- Mobile Menu Toggle (Visible only on mobile) -->
+<button class="md:hidden text-on-surface-variant hover:text-primary transition-opacity cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" style="font-size: 18px;">search</span>
+<input class="bg-surface-container-low border border-outline-variant rounded-full pl-10 pr-4 py-1.5 text-body-md text-on-surface focus:outline-none focus:border-primary w-64 transition-colors" placeholder="Search analytics..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<div class="flex items-center gap-sm hidden md:flex">
+<button class="text-on-surface-variant hover:text-primary transition-opacity cursor-pointer active:opacity-80"><span class="material-symbols-outlined">notifications</span></button>
+<button class="text-on-surface-variant hover:text-primary transition-opacity cursor-pointer active:opacity-80"><span class="material-symbols-outlined">contrast</span></button>
+</div>
+<button class="bg-primary-container text-on-primary-container px-4 py-1.5 rounded font-label-md text-label-md hover:bg-primary-container/90 transition-colors cursor-pointer active:scale-95 duration-200">Quick Add</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant cursor-pointer">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a serious logistics manager in a dark, high-tech control room environment, softly lit by blue and orange monitor glows, conveying authority and focus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDO07RXBUCDIoF1DxA-pqsgbzGp6bsfkEnSYYiCSDk7htd9ldgSBV6smjtpLQKAPHCaj9emk2661ll7SXZ46soigiFWdhsgiN-zq6Wx_saJ5n0ItNYlY0auhOEDpjJGeEekyM1tX1rx3RE8vAwmO6xWIJraza42olZBn230DFWjhbFtQlUo-ZkBI-fJKfEY_M59677MIS1_sQyhGDBlJMoo6S6ChEobAy3wi3Gc2oZXyIDrijIJ46QlZugzbPnOe6uEHV1s-h9DgPc"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 ml-0 md:ml-sidebar-width mt-16 overflow-y-auto p-lg lg:p-xl scroll-smooth">
+<div class="max-w-[1440px] mx-auto space-y-lg">
+<!-- Header Section -->
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-md">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Executive Analytics</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Comprehensive fleet performance and financial reporting.</p>
+</div>
+<!-- Date Range & Export Menu -->
+<div class="flex items-center gap-sm glass-panel p-1 rounded-lg">
+<button class="flex items-center gap-sm px-3 py-1.5 rounded hover:bg-surface-container-high transition-colors text-body-md">
+<span class="material-symbols-outlined text-on-surface-variant" style="font-size: 18px;">calendar_today</span>
+<span>Last 30 Days</span>
+</button>
+<div class="w-px h-6 bg-outline-variant mx-1"></div>
+<button class="flex items-center gap-sm px-3 py-1.5 rounded bg-surface-container-high hover:bg-surface-bright transition-colors text-body-md group relative">
+<span class="material-symbols-outlined text-primary" style="font-size: 18px;">download</span>
+<span>Export</span>
+</button>
+</div>
+</div>
+<!-- Empty State / Placeholder for Data -->
+<div class="flex flex-col items-center justify-center h-64 data-card rounded-xl text-center p-xl">
+<span class="material-symbols-outlined text-outline text-6xl mb-4">analytics</span>
+<h3 class="font-title-md text-title-md text-on-surface mb-2">Generate Analytics Report</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md">Select your parameters and run a comprehensive analysis of fleet efficiency, ROI, and driver performance to populate the dashboard.</p>
+<button class="mt-lg bg-primary-container text-on-primary-container px-6 py-2 rounded-lg font-label-md text-label-md hover:bg-primary-container/90 transition-colors flex items-center gap-sm">
+<span class="material-symbols-outlined" style="font-size: 18px;">play_arrow</span> Run Analysis
+                 </button>
+</div>
+</div>
+</main>
+</body></html>

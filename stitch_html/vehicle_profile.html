@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TransitIQ - Vehicle Details</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary": "#00344b",
+                        "on-secondary": "#05297a",
+                        "on-primary-fixed-variant": "#663d00",
+                        "error": "#ffb4ab",
+                        "surface-variant": "#333539",
+                        "surface-tint": "#ffb865",
+                        "outline-variant": "#534435",
+                        "primary-fixed-dim": "#ffb865",
+                        "on-secondary-container": "#9db2ff",
+                        "primary": "#ffb865",
+                        "on-surface-variant": "#d8c3af",
+                        "tertiary": "#83cfff",
+                        "inverse-on-surface": "#2f3035",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "primary-fixed": "#ffddba",
+                        "secondary-fixed": "#dce1ff",
+                        "on-tertiary-container": "#003750",
+                        "tertiary-container": "#1ca6e3",
+                        "surface-dim": "#111317",
+                        "surface-container-highest": "#333539",
+                        "on-tertiary-fixed": "#001e2d",
+                        "on-error-container": "#ffdad6",
+                        "surface-bright": "#37393e",
+                        "on-primary": "#482a00",
+                        "on-secondary-fixed": "#00164e",
+                        "tertiary-fixed": "#c6e7ff",
+                        "surface-container-high": "#282a2e",
+                        "on-surface": "#e2e2e8",
+                        "outline": "#a08e7b",
+                        "on-primary-container": "#4c2c00",
+                        "surface": "#111317",
+                        "on-secondary-fixed-variant": "#264191",
+                        "surface-container-lowest": "#0c0e12",
+                        "background": "#111317",
+                        "primary-container": "#d98a16",
+                        "inverse-primary": "#875200",
+                        "secondary-container": "#264191",
+                        "surface-container-low": "#1a1c20",
+                        "secondary-fixed-dim": "#b6c4ff",
+                        "on-error": "#690005",
+                        "on-primary-fixed": "#2b1700",
+                        "surface-container": "#1e2024",
+                        "inverse-surface": "#e2e2e8",
+                        "tertiary-fixed-dim": "#83cfff",
+                        "secondary": "#b6c4ff",
+                        "error-container": "#93000a",
+                        "on-background": "#e2e2e8"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "sm": "8px",
+                        "base": "4px",
+                        "sidebar-width": "260px",
+                        "lg": "24px",
+                        "md": "16px",
+                        "container-max": "1440px",
+                        "xs": "4px",
+                        "xl": "32px",
+                        "2xl": "48px"
+                    },
+                    fontFamily: {
+                        "headline-lg-mobile": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "title-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "code-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    fontSize: {
+                        "headline-lg-mobile": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+                        "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "title-md": ["18px", { lineHeight: "28px", fontWeight: "500" }],
+                        "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "600" }],
+                        "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "code-sm": ["12px", { lineHeight: "16px", fontWeight: "400" }],
+                        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+                        "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(22, 25, 30, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid #262B33;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .ai-glow {
+            box-shadow: 0 0 15px rgba(30, 58, 138, 0.4);
+            animation: pulse-glow 3s infinite alternate;
+        }
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 10px rgba(30, 58, 138, 0.3); }
+            100% { box-shadow: 0 0 25px rgba(30, 58, 138, 0.6); }
+        }
+        .gauge-circle {
+            stroke-dasharray: 283;
+            stroke-dashoffset: 70;
+            transition: stroke-dashoffset 1s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md antialiased min-h-screen overflow-x-hidden">
+<aside class="w-sidebar-width h-screen fixed left-0 top-0 bg-surface dark:bg-surface border-r border-outline-variant flex flex-col h-full z-40">
+<div class="px-lg py-xl">
+<div class="font-headline-md text-headline-md font-bold text-primary">TransitIQ</div>
+<div class="font-label-md text-label-md text-on-surface-variant mt-sm">Fleet Manager</div>
+</div>
+<nav class="flex-1 overflow-y-auto py-md space-y-xs">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm bg-primary-container/10 text-primary border-l-4 border-primary cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+<span class="font-title-md text-title-md">Fleet</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">person</span>
+<span>Drivers</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">route</span>
+<span>Trips</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">build</span>
+<span>Maintenance</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">local_gas_station</span>
+<span>Fuel & Expenses</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span>Analytics</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined text-tertiary-container">smart_toy</span>
+<span class="text-tertiary-container">AI Assistant</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">notifications</span>
+<span>Notifications</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+</aside>
+<header class="h-16 fixed top-0 right-0 left-sidebar-width bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-outline-variant flex justify-between items-center px-lg w-[calc(100%-260px)] z-30 font-label-md text-label-md">
+<div class="flex items-center bg-surface-container-low rounded-full px-md py-sm border border-outline-variant w-1/3">
+<span class="material-symbols-outlined text-on-surface-variant mr-sm">search</span>
+<input class="bg-transparent border-none outline-none text-on-surface w-full font-body-md text-body-md focus:ring-0" placeholder="Search fleet, drivers, or trips..." type="text"/>
+</div>
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant hover:text-primary transition-opacity cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">contrast</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-opacity cursor-pointer active:opacity-80 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="bg-primary-container text-on-primary font-title-md text-title-md px-md py-sm rounded-lg hover:bg-primary transition-colors cursor-pointer active:scale-95 flex items-center gap-xs">
+<span class="material-symbols-outlined">add</span> Quick Add
+            </button>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest border border-outline-variant overflow-hidden ml-sm cursor-pointer">
+<img alt="Fleet Manager Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a fleet manager in a modern, dark-themed control room. The lighting is dramatic with cool blue and warm orange accents reflecting on their face, conveying a sense of high-tech logistics management." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBM9n-OgUyUlW0VlYUHaZdYqKx_Iu47EVqkoSb1bOyFeMrEO12N0Qr-uLvwuoJN0eInPk8DjXaiNepIu1FmNdpY4X6aM7__kl9Roqq-BYfZnlzoh62cTAVFZSwSrTmmPv8UwvOdjcWZiXgU18X-IvmEC5XIANeF8Lu7gyHEwGzjNRNYvdS4q6fgtX_TXU3mu-ansvcJFhcNja8EizBPWSI5lx2UyIemzMVq01Ki88Z6QfEJ4dc_KjdmUmC42HeIPLFih1cbOcsGZco"/>
+</div>
+</div>
+</header>
+<main class="ml-sidebar-width pt-16 min-h-screen">
+<div class="max-w-container-max mx-auto p-lg">
+<div class="mb-sm flex items-center text-on-surface-variant font-label-md text-label-md">
+<a class="hover:text-primary transition-colors" href="#">Fleet</a>
+<span class="material-symbols-outlined mx-xs text-[16px]">chevron_right</span>
+<span class="text-on-surface">Heavy Duty</span>
+<span class="material-symbols-outlined mx-xs text-[16px]">chevron_right</span>
+<span class="text-primary font-bold">TX-8924-HD</span>
+</div>
+<div class="glass-panel rounded-2xl overflow-hidden mb-lg relative">
+<div class="absolute inset-0 bg-gradient-to-r from-surface to-transparent w-2/3 z-0 pointer-events-none"></div>
+<div class="flex flex-col md:flex-row relative z-10">
+<div class="w-full md:w-1/3 h-64 md:h-auto relative">
+<img alt="Vehicle Photo" class="w-full h-full object-cover" data-alt="A dramatic, high-contrast photograph of a modern heavy-duty commercial truck parked in a depot at twilight. The truck is sleek, dark grey with vibrant orange branding accents. The environment is dark and industrial, lit by harsh artificial spotlights creating a cinematic, high-stakes logistics atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuClN4XG5xp9VSAgH8R9Dhouvu8nqfx8nxhUrnZBJD5-Mi2b-jH1Vu_WBVDCEpHo8r9hYVS3LQhm0bIKr8k5JZ6C8bp2Rg9XWN3kNnw8zuCLuQO12ljgOkLIVuxqVt_DRbwNcHFwHkl1fDRLiLJ1PEmTxWgPX2BzeruT7Tdbb0aHZNACBv3wxAbyuNNT8SsqHIn1wAsia_PD6MSxz9QikSS8hMKiyYhVU5jn5UYTP9pkIhdRJE9sIPp-m-77L1_Jg9X2DQVHP3n3x3A"/>
+<div class="absolute top-md left-md bg-[#0c0e12]/80 backdrop-blur-md px-sm py-xs rounded text-primary font-label-md text-label-md border border-primary/30 flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span> Active En-Route
+                        </div>
+</div>
+<div class="w-full md:w-2/3 p-xl flex flex-col justify-center">
+<div class="flex justify-between items-start mb-md">
+<div>
+<h1 class="font-display-lg text-display-lg text-on-surface tracking-tight">Volvo VNL 860</h1>
+<p class="font-title-md text-title-md text-on-surface-variant mt-xs">ID: TX-8924-HD • License: ABC 1234</p>
+</div>
+<div class="flex gap-sm">
+<button class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:text-primary hover:border-primary transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:text-primary hover:border-primary transition-colors">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-md mt-sm">
+<div class="bg-surface-container-low p-sm rounded-lg border border-outline-variant/50">
+<p class="font-label-md text-label-md text-on-surface-variant uppercase">Current Driver</p>
+<div class="flex items-center gap-sm mt-xs">
+<div class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-label-md text-label-md">MR</div>
+<p class="font-body-md text-body-md text-on-surface font-medium">Marcus Reed</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-sm rounded-lg border border-outline-variant/50">
+<p class="font-label-md text-label-md text-on-surface-variant uppercase">Odometer</p>
+<p class="font-title-md text-title-md text-on-surface mt-xs">142,850 <span class="text-on-surface-variant text-[14px]">mi</span></p>
+</div>
+<div class="bg-surface-container-low p-sm rounded-lg border border-outline-variant/50">
+<p class="font-label-md text-label-md text-on-surface-variant uppercase">Fuel Level</p>
+<div class="flex items-center gap-sm mt-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">local_gas_station</span>
+<p class="font-title-md text-title-md text-on-surface">68%</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-sm rounded-lg border border-outline-variant/50">
+<p class="font-label-md text-label-md text-on-surface-variant uppercase">Next Service</p>
+<p class="font-body-md text-body-md text-primary mt-xs font-medium">In 1,200 mi</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="border-b border-outline-variant mb-lg overflow-x-auto">
+<nav class="flex gap-xl px-sm">
+<a class="text-primary font-title-md text-title-md font-bold border-b-2 border-primary pb-sm whitespace-nowrap" href="#">Overview</a>
+<a class="text-on-surface-variant font-title-md text-title-md pb-sm hover:text-on-surface transition-colors whitespace-nowrap" href="#">Trips</a>
+<a class="text-on-surface-variant font-title-md text-title-md pb-sm hover:text-on-surface transition-colors whitespace-nowrap" href="#">Maintenance</a>
+<a class="text-on-surface-variant font-title-md text-title-md pb-sm hover:text-on-surface transition-colors whitespace-nowrap flex items-center gap-xs" href="#">
+                        Documents <span class="bg-error text-on-error px-xs py-[2px] rounded text-[10px] font-bold">1</span>
+</a>
+<a class="text-on-surface-variant font-title-md text-title-md pb-sm hover:text-on-surface transition-colors whitespace-nowrap" href="#">Analytics</a>
+</nav>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-lg">
+<div class="md:col-span-4 bg-surface border border-outline-variant rounded-xl p-lg relative overflow-hidden flex flex-col items-center justify-center min-h-[300px]">
+<div class="absolute top-md left-md">
+<h2 class="font-title-md text-title-md text-on-surface">Safety Credit Score</h2>
+</div>
+<div class="absolute top-md right-md text-tertiary-container">
+<span class="material-symbols-outlined ai-glow rounded-full">smart_toy</span>
+</div>
+<div class="relative w-48 h-48 mt-xl flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="45" stroke="#282a2e" stroke-width="8"></circle>
+<circle class="gauge-circle" cx="50" cy="50" fill="none" r="45" stroke="#D98A16" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="absolute flex flex-col items-center">
+<span class="font-display-lg text-display-lg text-primary">82</span>
+<span class="font-label-md text-label-md text-on-surface-variant uppercase mt-xs">Good Standing</span>
+</div>
+</div>
+<div class="mt-lg w-full bg-[#1E3A8A]/10 border border-[#1E3A8A]/30 rounded-lg p-sm text-center">
+<p class="font-body-md text-body-md text-tertiary-fixed">AI Insight: Driver braking patterns have improved by 15% this week. Score trending upwards.</p>
+</div>
+</div>
+<div class="md:col-span-8 flex flex-col gap-lg">
+<div class="bg-surface border border-outline-variant rounded-xl p-lg">
+<div class="flex justify-between items-center mb-md">
+<h2 class="font-title-md text-title-md text-on-surface">Compliance Documents</h2>
+<button class="text-primary font-label-md text-label-md hover:underline flex items-center">View All <span class="material-symbols-outlined text-[16px]">arrow_forward</span></button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-md">
+<div class="bg-surface-container-low border border-outline-variant rounded-lg p-md hover:bg-surface-container-high transition-colors cursor-pointer group">
+<div class="flex justify-between items-start mb-sm">
+<div class="w-10 h-10 rounded bg-surface-container-highest flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">description</span>
+</div>
+<span class="bg-[#1ca6e3]/10 text-tertiary-container border border-tertiary-container/30 px-sm py-xs rounded-full font-label-md text-label-md">Valid</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface mb-xs">Vehicle Insurance</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Exp: Oct 24, 2024</p>
+</div>
+<div class="bg-surface-container-low border border-outline-variant rounded-lg p-md hover:bg-surface-container-high transition-colors cursor-pointer group">
+<div class="flex justify-between items-start mb-sm">
+<div class="w-10 h-10 rounded bg-surface-container-highest flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">verified</span>
+</div>
+<span class="bg-[#1ca6e3]/10 text-tertiary-container border border-tertiary-container/30 px-sm py-xs rounded-full font-label-md text-label-md">Valid</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface mb-xs">Registration (RC)</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Exp: Jan 15, 2025</p>
+</div>
+<div class="bg-error/10 border border-error/50 rounded-lg p-md hover:bg-error/20 transition-colors cursor-pointer relative overflow-hidden">
+<div class="absolute top-0 right-0 w-16 h-16 bg-error/20 rounded-bl-full -mr-4 -mt-4"></div>
+<div class="flex justify-between items-start mb-sm relative z-10">
+<div class="w-10 h-10 rounded bg-error/20 flex items-center justify-center text-error">
+<span class="material-symbols-outlined">warning</span>
+</div>
+<span class="bg-error text-on-error px-sm py-xs rounded-full font-label-md text-label-md animate-pulse">Expiring Soon</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface mb-xs relative z-10">Fitness Certificate</h3>
+<p class="font-body-md text-body-md text-error font-medium relative z-10">Exp: In 14 Days</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-lg flex-1">
+<div class="bg-surface border border-outline-variant rounded-xl p-lg">
+<h2 class="font-title-md text-title-md text-on-surface mb-md">Active Issue</h2>
+<div class="flex gap-md items-start">
+<div class="mt-xs text-primary">
+<span class="material-symbols-outlined text-[24px]">build</span>
+</div>
+<div>
+<h4 class="font-body-lg text-body-lg text-on-surface font-medium">Brake Pad Wear Detection</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">Telematics indicate unusual braking pressure on rear axle. Recommended inspection at next depot.</p>
+<button class="mt-sm font-label-md text-label-md border border-outline-variant px-md py-xs rounded hover:border-primary hover:text-primary transition-colors text-on-surface">Schedule Maintenance</button>
+</div>
+</div>
+</div>
+<div class="bg-surface border border-outline-variant rounded-xl p-lg relative overflow-hidden">
+<div class="absolute inset-0 z-0 opacity-20 pointer-events-none" style="background-image: radial-gradient(#534435 1px, transparent 1px); background-size: 20px 20px;"></div>
+<h2 class="font-title-md text-title-md text-on-surface mb-md relative z-10">Trip Performance</h2>
+<div class="flex flex-col gap-sm relative z-10">
+<div>
+<div class="flex justify-between font-label-md text-label-md mb-xs">
+<span class="text-on-surface-variant">Fuel Efficiency</span>
+<span class="text-primary">6.8 MPG</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[70%]"></div>
+</div>
+</div>
+<div class="mt-sm">
+<div class="flex justify-between font-label-md text-label-md mb-xs">
+<span class="text-on-surface-variant">On-Time Rate</span>
+<span class="text-[#1ca6e3]">94%</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-[#1ca6e3] h-full w-[94%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

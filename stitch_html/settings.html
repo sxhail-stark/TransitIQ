@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Settings &amp; RBAC - TransitIQ</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#00344b",
+                        "on-secondary": "#05297a",
+                        "on-primary-fixed-variant": "#663d00",
+                        "error": "#ffb4ab",
+                        "surface-variant": "#333539",
+                        "surface-tint": "#ffb865",
+                        "outline-variant": "#534435",
+                        "primary-fixed-dim": "#ffb865",
+                        "on-secondary-container": "#9db2ff",
+                        "primary": "#ffb865",
+                        "on-surface-variant": "#d8c3af",
+                        "tertiary": "#83cfff",
+                        "inverse-on-surface": "#2f3035",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "primary-fixed": "#ffddba",
+                        "secondary-fixed": "#dce1ff",
+                        "on-tertiary-container": "#003750",
+                        "tertiary-container": "#1ca6e3",
+                        "surface-dim": "#111317",
+                        "surface-container-highest": "#333539",
+                        "on-tertiary-fixed": "#001e2d",
+                        "on-error-container": "#ffdad6",
+                        "surface-bright": "#37393e",
+                        "on-primary": "#482a00",
+                        "on-secondary-fixed": "#00164e",
+                        "tertiary-fixed": "#c6e7ff",
+                        "surface-container-high": "#282a2e",
+                        "on-surface": "#e2e2e8",
+                        "outline": "#a08e7b",
+                        "on-primary-container": "#4c2c00",
+                        "surface": "#111317",
+                        "on-secondary-fixed-variant": "#264191",
+                        "surface-container-lowest": "#0c0e12",
+                        "background": "#111317",
+                        "primary-container": "#d98a16",
+                        "inverse-primary": "#875200",
+                        "secondary-container": "#264191",
+                        "surface-container-low": "#1a1c20",
+                        "secondary-fixed-dim": "#b6c4ff",
+                        "on-error": "#690005",
+                        "on-primary-fixed": "#2b1700",
+                        "surface-container": "#1e2024",
+                        "inverse-surface": "#e2e2e8",
+                        "tertiary-fixed-dim": "#83cfff",
+                        "secondary": "#b6c4ff",
+                        "error-container": "#93000a",
+                        "on-background": "#e2e2e8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "base": "4px",
+                        "sidebar-width": "260px",
+                        "lg": "24px",
+                        "md": "16px",
+                        "container-max": "1440px",
+                        "xs": "4px",
+                        "xl": "32px",
+                        "2xl": "48px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "title-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "code-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "title-md": ["18px", { "lineHeight": "28px", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "code-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0F1115;
+            color: #e2e2e8;
+        }
+        .glass-panel {
+            background: rgba(22, 25, 30, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid #262B33;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        /* Custom Checkbox */
+        [type="checkbox"] {
+            appearance: none;
+            background-color: transparent;
+            margin: 0;
+            font: inherit;
+            color: currentColor;
+            width: 1.15em;
+            height: 1.15em;
+            border: 2px solid #534435;
+            border-radius: 0.15em;
+            display: grid;
+            place-content: center;
+        }
+        [type="checkbox"]::before {
+            content: "";
+            width: 0.65em;
+            height: 0.65em;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em var(--form-control-color, #ffb865);
+            background-color: #ffb865;
+            transform-origin: bottom left;
+            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+        }
+        [type="checkbox"]:checked::before {
+            transform: scale(1);
+        }
+        [type="checkbox"]:checked {
+            border-color: #ffb865;
+        }
+    </style>
+</head>
+<body class="flex bg-background h-screen overflow-hidden text-on-surface font-body-md">
+<!-- SideNavBar -->
+<nav class="hidden md:flex w-sidebar-width h-screen fixed left-0 top-0 border-r border-outline-variant bg-surface flex-col z-20">
+<div class="p-lg">
+<div class="flex items-center gap-md mb-xl">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="TransitIQ Corporate Logo featuring a futuristic, stylized globe icon intertwined with dynamic route lines. The logo is rendered in vibrant primary orange (#ffb865) against a deep space dark background, creating a glowing, high-tech aesthetic suited for logistics software." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSwBo3dxnQTYaD1imfLn-hGetk-f527ccw4qvWSjv1dL_wcZm5OMEp0oBvdNXsXzZIwl4mfxnFM3xoaOKiTgBcl5iv4Hy77DT6fUXnDp2yvzWyEcWeslqtoqjoKhgJItxxns9M86L_cz8ZCodjIuWuCksHXtgC7vFioPkNucW3xPBT3ToS_L-aGRYkX_Us6CYh7ZW4NuIJlU42QkeqFtUQXMmgYTkmWYVvRnfWb9hn4xxN3KR1VDK6M4AlP8pd7UXypEe9PLmd14o"/>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">TransitIQ</h1>
+<p class="font-label-md text-label-md text-on-surface-variant">Fleet Manager</p>
+</div>
+</div>
+<ul class="space-y-2">
+<li><a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded" href="#"><span class="material-symbols-outlined">dashboard</span>Dashboard</a></li>
+<li><a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded" href="#"><span class="material-symbols-outlined">local_shipping</span>Fleet</a></li>
+<li><a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded" href="#"><span class="material-symbols-outlined">person</span>Drivers</a></li>
+<li><a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded" href="#"><span class="material-symbols-outlined">route</span>Trips</a></li>
+<li><a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded" href="#"><span class="material-symbols-outlined">build</span>Maintenance</a></li>
+<li><a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded" href="#"><span class="material-symbols-outlined">local_gas_station</span>Fuel &amp; Expenses</a></li>
+<li><a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded" href="#"><span class="material-symbols-outlined">analytics</span>Analytics</a></li>
+<li><a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded" href="#"><span class="material-symbols-outlined">smart_toy</span>AI Assistant</a></li>
+<li><a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded" href="#"><span class="material-symbols-outlined">notifications</span>Notifications</a></li>
+<li><a class="flex items-center gap-md px-md py-sm bg-primary-container/10 text-primary border-l-4 border-primary hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200" href="#"><span class="material-symbols-outlined">settings</span>Settings</a></li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 ml-0 md:ml-sidebar-width h-screen overflow-y-auto flex flex-col relative z-10 bg-background">
+<!-- TopNavBar -->
+<header class="h-16 sticky top-0 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-outline-variant flex justify-between items-center px-lg w-full z-30">
+<div class="flex items-center gap-md">
+<!-- Mobile Menu Button -->
+<button class="md:hidden text-on-surface-variant hover:text-primary transition-opacity cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-[#1C2128] border border-[#262B33] rounded-md text-on-surface focus:outline-none focus:border-primary-container/50 transition-colors font-body-md text-body-md w-64 placeholder-on-surface-variant" placeholder="Search settings..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant hover:text-primary transition-opacity cursor-pointer active:opacity-80 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-primary rounded-full"></span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-opacity cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">contrast</span>
+</button>
+</div>
+<button class="bg-primary-container text-[#0F1115] px-4 py-1.5 rounded font-label-md text-label-md font-bold hover:bg-primary transition-colors">Quick Add</button>
+<div class="w-8 h-8 rounded-full border border-outline-variant overflow-hidden cursor-pointer">
+<img class="w-full h-full object-cover" data-alt="Headshot of a professional fleet manager in a modern, subtly lit office. The lighting has a blue-ish tint to match a high-tech control room vibe. Sharp focus, high contrast, professional attire." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvrHru3Ysmb-_HKJ5VQNbZqG5KULRFh3uxa5RhL7wP7Xry1E_iTaxELh7Fgz1HNhXpt3i0Oq4AXkAbvEtsDbcBlZq1avKNWhqYCKQDqBuTEGvX_m_P_Q90WWFeQUojsKSdNgtRb72wR-Otg1BeAMVbeT7PW3oD0VVzcNraFxdt9BaA-Wam4UAehs1vFxEQz9_-rvR-KDrxCxSaFPLlgVBLGX1c2dDLI3FpDuZSScKEN669S-hUO2A_cPCa0aYV2hPK_bQnRBmUDt8"/>
+</div>
+</div>
+</header>
+<div class="p-lg lg:p-xl max-w-container-max mx-auto w-full">
+<!-- Page Header -->
+<div class="mb-lg">
+<h2 class="font-headline-lg text-headline-lg mb-2">Settings &amp; Configuration</h2>
+<p class="text-on-surface-variant font-body-md text-body-md max-w-2xl">Manage system settings, roles, permissions, and security configurations.</p>
+</div>
+<!-- Tab Navigation -->
+<div class="flex border-b border-[#262B33] mb-lg overflow-x-auto no-scrollbar">
+<button class="px-md py-sm border-b-2 border-transparent text-on-surface-variant font-title-md text-title-md hover:text-primary transition-colors whitespace-nowrap">Users</button>
+<button class="px-md py-sm border-b-2 border-primary text-primary font-title-md text-title-md font-bold whitespace-nowrap">Roles &amp; Permissions</button>
+<button class="px-md py-sm border-b-2 border-transparent text-on-surface-variant font-title-md text-title-md hover:text-primary transition-colors whitespace-nowrap">Notifications</button>
+<button class="px-md py-sm border-b-2 border-transparent text-on-surface-variant font-title-md text-title-md hover:text-primary transition-colors whitespace-nowrap">Security &amp; Auth</button>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-lg">
+<!-- Main RBAC Panel -->
+<div class="lg:col-span-2 space-y-lg">
+<!-- Role Permission Matrix -->
+<div class="glass-panel rounded-lg overflow-hidden">
+<div class="p-md border-b border-[#262B33] flex justify-between items-center bg-[#16191E]">
+<div>
+<h3 class="font-title-md text-title-md text-on-surface">Role Permission Matrix</h3>
+<p class="text-on-surface-variant font-label-md text-label-md">Configure access levels across system modules.</p>
+</div>
+<button class="text-primary-container hover:text-primary font-label-md text-label-md flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm">add</span> New Role
+                            </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left font-body-md text-body-md whitespace-nowrap">
+<thead>
+<tr class="bg-[#16191E] border-b border-[#262B33] text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">
+<th class="p-md font-semibold">Role</th>
+<th class="p-md font-semibold text-center">Dashboard</th>
+<th class="p-md font-semibold text-center">Fleet Mgmt</th>
+<th class="p-md font-semibold text-center">Drivers</th>
+<th class="p-md font-semibold text-center">Billing</th>
+<th class="p-md font-semibold text-center">Settings</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-[#262B33] hover:bg-[#1C2128] transition-colors">
+<td class="p-md font-medium text-on-surface">Super Admin</td>
+<td class="p-md text-center"><input checked="" class="opacity-50 cursor-not-allowed" disabled="" type="checkbox"/></td>
+<td class="p-md text-center"><input checked="" class="opacity-50 cursor-not-allowed" disabled="" type="checkbox"/></td>
+<td class="p-md text-center"><input checked="" class="opacity-50 cursor-not-allowed" disabled="" type="checkbox"/></td>
+<td class="p-md text-center"><input checked="" class="opacity-50 cursor-not-allowed" disabled="" type="checkbox"/></td>
+<td class="p-md text-center"><input checked="" class="opacity-50 cursor-not-allowed" disabled="" type="checkbox"/></td>
+</tr>
+<tr class="bg-[#121418] border-b border-[#262B33] hover:bg-[#1C2128] transition-colors">
+<td class="p-md font-medium text-on-surface">Dispatcher</td>
+<td class="p-md text-center"><input checked="" type="checkbox"/></td>
+<td class="p-md text-center"><input checked="" type="checkbox"/></td>
+<td class="p-md text-center"><input checked="" type="checkbox"/></td>
+<td class="p-md text-center"><input type="checkbox"/></td>
+<td class="p-md text-center"><input type="checkbox"/></td>
+</tr>
+<tr class="border-b border-[#262B33] hover:bg-[#1C2128] transition-colors">
+<td class="p-md font-medium text-on-surface">Maintenance Tech</td>
+<td class="p-md text-center"><input checked="" type="checkbox"/></td>
+<td class="p-md text-center"><input checked="" type="checkbox"/></td>
+<td class="p-md text-center"><input type="checkbox"/></td>
+<td class="p-md text-center"><input type="checkbox"/></td>
+<td class="p-md text-center"><input type="checkbox"/></td>
+</tr>
+<tr class="bg-[#121418] hover:bg-[#1C2128] transition-colors">
+<td class="p-md font-medium text-on-surface">Finance Analyst</td>
+<td class="p-md text-center"><input checked="" type="checkbox"/></td>
+<td class="p-md text-center"><input type="checkbox"/></td>
+<td class="p-md text-center"><input type="checkbox"/></td>
+<td class="p-md text-center"><input checked="" type="checkbox"/></td>
+<td class="p-md text-center"><input type="checkbox"/></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Audit Log -->
+<div class="glass-panel rounded-lg overflow-hidden">
+<div class="p-md border-b border-[#262B33] flex justify-between items-center bg-[#16191E]">
+<h3 class="font-title-md text-title-md text-on-surface">Security Audit Log</h3>
+<button class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined text-sm">filter_list</span></button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left font-body-md text-body-md">
+<thead>
+<tr class="bg-[#16191E] border-b border-[#262B33] text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">
+<th class="p-md font-semibold">User</th>
+<th class="p-md font-semibold">Action</th>
+<th class="p-md font-semibold">Timestamp</th>
+<th class="p-md font-semibold">IP Address</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-[#262B33] hover:bg-[#1C2128] transition-colors">
+<td class="p-md flex items-center gap-sm">
+<div class="w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center font-label-md text-xs">JD</div>
+                                            John Doe
+                                        </td>
+<td class="p-md text-on-surface-variant">Modified Dispatcher Role</td>
+<td class="p-md text-on-surface-variant">2023-10-27 14:32:01</td>
+<td class="p-md font-code-sm text-code-sm text-on-surface-variant">192.168.1.105</td>
+</tr>
+<tr class="bg-[#121418] border-b border-[#262B33] hover:bg-[#1C2128] transition-colors">
+<td class="p-md flex items-center gap-sm">
+<div class="w-6 h-6 rounded-full bg-tertiary/20 text-tertiary flex items-center justify-center font-label-md text-xs">AS</div>
+                                            Alice Smith
+                                        </td>
+<td class="p-md text-on-surface-variant">Successful Login</td>
+<td class="p-md text-on-surface-variant">2023-10-27 09:15:22</td>
+<td class="p-md font-code-sm text-code-sm text-on-surface-variant">10.0.0.42</td>
+</tr>
+<tr class="border-b border-[#262B33] hover:bg-[#1C2128] transition-colors">
+<td class="p-md flex items-center gap-sm">
+<div class="w-6 h-6 rounded-full bg-error/20 text-error flex items-center justify-center font-label-md text-xs">SY</div>
+                                            System
+                                        </td>
+<td class="p-md text-error">Failed Login Attempt (Admin)</td>
+<td class="p-md text-on-surface-variant">2023-10-26 23:59:11</td>
+<td class="p-md font-code-sm text-code-sm text-on-surface-variant">45.22.19.88</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-sm text-center border-t border-[#262B33]">
+<button class="text-primary-container font-label-md text-label-md hover:underline">View Full Log</button>
+</div>
+</div>
+</div>
+<!-- Side Panel (Security) -->
+<div class="space-y-lg">
+<!-- 2FA Settings -->
+<div class="glass-panel rounded-lg p-md">
+<div class="flex items-start justify-between mb-md">
+<div>
+<h3 class="font-title-md text-title-md text-on-surface flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary">shield_locked</span> Two-Factor Auth
+                                </h3>
+<p class="text-on-surface-variant font-label-md text-label-md mt-1">Require 2FA for all users in administrative roles.</p>
+</div>
+<!-- Toggle -->
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-[#333539] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+<div class="p-sm bg-[#1C2128] rounded border border-[#262B33]">
+<p class="font-body-md text-body-md text-on-surface-variant text-sm flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm text-tertiary">info</span> Currently enforced for 3 roles.
+                            </p>
+</div>
+</div>
+<!-- Session Management -->
+<div class="glass-panel rounded-lg overflow-hidden">
+<div class="p-md border-b border-[#262B33] bg-[#16191E]">
+<h3 class="font-title-md text-title-md text-on-surface">Active Sessions</h3>
+</div>
+<div class="p-md space-y-md">
+<div class="flex justify-between items-center pb-md border-b border-[#262B33]">
+<div>
+<p class="font-body-md text-body-md text-on-surface">MacBook Pro - Chrome</p>
+<p class="font-label-md text-label-md text-on-surface-variant">San Francisco, CA • Current Session</p>
+</div>
+<span class="bg-primary/20 text-primary px-2 py-0.5 rounded-full font-label-md text-[10px]">Active</span>
+</div>
+<div class="flex justify-between items-center pb-md border-b border-[#262B33]">
+<div>
+<p class="font-body-md text-body-md text-on-surface">iPhone 13 - Safari</p>
+<p class="font-label-md text-label-md text-on-surface-variant">Oakland, CA • Last seen 2h ago</p>
+</div>
+<button class="text-on-surface-variant hover:text-error transition-colors" title="Revoke Session">
+<span class="material-symbols-outlined text-sm">cancel</span>
+</button>
+</div>
+<div class="flex justify-between items-center">
+<div>
+<p class="font-body-md text-body-md text-on-surface">Windows PC - Edge</p>
+<p class="font-label-md text-label-md text-on-surface-variant">Seattle, WA • Last seen yesterday</p>
+</div>
+<button class="text-on-surface-variant hover:text-error transition-colors" title="Revoke Session">
+<span class="material-symbols-outlined text-sm">cancel</span>
+</button>
+</div>
+</div>
+<div class="p-sm bg-[#16191E] border-t border-[#262B33] text-center">
+<button class="text-error hover:text-error/80 font-label-md text-label-md transition-colors">Revoke All Other Sessions</button>
+</div>
+</div>
+<!-- AI Insights Box -->
+<div class="glass-panel rounded-lg p-md relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-r from-secondary-container/20 to-primary-container/20 opacity-50 group-hover:opacity-100 transition-opacity"></div>
+<div class="absolute -inset-[1px] bg-gradient-to-r from-secondary-container to-primary-container rounded-lg opacity-20 group-hover:opacity-40 z-0"></div>
+<div class="relative z-10">
+<div class="flex items-center gap-xs mb-sm">
+<span class="material-symbols-outlined text-tertiary">smart_toy</span>
+<h4 class="font-title-md text-title-md text-on-surface">Security Insight</h4>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">
+                                3 users with the "Dispatcher" role have not enabled 2FA despite the recent policy update. Recommend enforcing login block until configured.
+                            </p>
+<button class="mt-sm text-tertiary font-label-md text-label-md hover:underline flex items-center gap-xs">
+                                Review Users <span class="material-symbols-outlined text-xs">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

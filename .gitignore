@@ -1,0 +1,30 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.env
+
+# Node.js / Frontend
+node_modules/
+frontend/node_modules/
+dist/
+frontend/dist/
+.eslintcache
+.tsbuildinfo
+
+# Database
+transitiq.db
+transitiq.db-journal
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Miscellaneous
+.DS_Store
+*.log

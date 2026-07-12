@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TransitIQ - Maintenance Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary": "#00344b",
+                        "on-secondary": "#05297a",
+                        "on-primary-fixed-variant": "#663d00",
+                        "error": "#ffb4ab",
+                        "surface-variant": "#333539",
+                        "surface-tint": "#ffb865",
+                        "outline-variant": "#534435",
+                        "primary-fixed-dim": "#ffb865",
+                        "on-secondary-container": "#9db2ff",
+                        "primary": "#ffb865",
+                        "on-surface-variant": "#d8c3af",
+                        "tertiary": "#83cfff",
+                        "inverse-on-surface": "#2f3035",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "primary-fixed": "#ffddba",
+                        "secondary-fixed": "#dce1ff",
+                        "on-tertiary-container": "#003750",
+                        "tertiary-container": "#1ca6e3",
+                        "surface-dim": "#111317",
+                        "surface-container-highest": "#333539",
+                        "on-tertiary-fixed": "#001e2d",
+                        "on-error-container": "#ffdad6",
+                        "surface-bright": "#37393e",
+                        "on-primary": "#482a00",
+                        "on-secondary-fixed": "#00164e",
+                        "tertiary-fixed": "#c6e7ff",
+                        "surface-container-high": "#282a2e",
+                        "on-surface": "#e2e2e8",
+                        "outline": "#a08e7b",
+                        "on-primary-container": "#4c2c00",
+                        "surface": "#111317",
+                        "on-secondary-fixed-variant": "#264191",
+                        "surface-container-lowest": "#0c0e12",
+                        "background": "#111317",
+                        "primary-container": "#d98a16",
+                        "inverse-primary": "#875200",
+                        "secondary-container": "#264191",
+                        "surface-container-low": "#1a1c20",
+                        "secondary-fixed-dim": "#b6c4ff",
+                        "on-error": "#690005",
+                        "on-primary-fixed": "#2b1700",
+                        "surface-container": "#1e2024",
+                        "inverse-surface": "#e2e2e8",
+                        "tertiary-fixed-dim": "#83cfff",
+                        "secondary": "#b6c4ff",
+                        "error-container": "#93000a",
+                        "on-background": "#e2e2e8"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "sm": "8px",
+                        "base": "4px",
+                        "sidebar-width": "260px",
+                        "lg": "24px",
+                        "md": "16px",
+                        "container-max": "1440px",
+                        "xs": "4px",
+                        "xl": "32px",
+                        "2xl": "48px"
+                    },
+                    fontFamily: {
+                        "headline-lg-mobile": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "title-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "code-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    fontSize: {
+                        "headline-lg-mobile": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+                        "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "title-md": ["18px", { lineHeight: "28px", fontWeight: "500" }],
+                        "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "600" }],
+                        "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "code-sm": ["12px", { lineHeight: "16px", fontWeight: "400" }],
+                        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+                        "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0F1115;
+            color: #e2e2e8;
+        }
+        /* Hide scrollbar for kanban board */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md overflow-hidden flex h-screen">
+<!-- SideNavBar (Desktop) -->
+<nav class="w-sidebar-width h-screen fixed left-0 top-0 bg-surface dark:bg-surface border-r border-outline-variant flex flex-col h-full hidden md:flex z-50">
+<div class="px-lg py-xl border-b border-outline-variant/30 flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-on-primary-container font-headline-md text-headline-md">
+                T
+            </div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">TransitIQ</h1>
+<p class="font-label-md text-label-md text-on-surface-variant">Fleet Manager</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto py-md flex flex-col gap-sm px-sm">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="font-title-md text-title-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">local_shipping</span>
+<span class="font-title-md text-title-md">Fleet</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">person</span>
+<span class="font-title-md text-title-md">Drivers</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">route</span>
+<span class="font-title-md text-title-md">Trips</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm bg-primary-container/10 text-primary border-l-4 border-primary rounded-r-lg cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">build</span>
+<span class="font-title-md text-title-md">Maintenance</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">local_gas_station</span>
+<span class="font-title-md text-title-md">Fuel &amp; Expenses</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">analytics</span>
+<span class="font-title-md text-title-md">Analytics</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">smart_toy</span>
+<span class="font-title-md text-title-md">AI Assistant</span>
+</a>
+<div class="mt-auto pt-md border-t border-outline-variant/30 flex flex-col gap-sm">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+<span class="font-title-md text-title-md">Notifications</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+<span class="font-title-md text-title-md">Settings</span>
+</a>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col h-full ml-0 md:ml-[260px] relative w-full">
+<!-- TopNavBar -->
+<header class="h-16 fixed top-0 right-0 left-0 md:left-[260px] bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-outline-variant flex justify-between items-center px-lg z-40">
+<div class="flex items-center gap-lg">
+<!-- Mobile Menu Trigger -->
+<button class="md:hidden text-on-surface hover:text-primary transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="font-headline-lg text-headline-lg font-bold text-on-surface hidden md:block">Maintenance Center</div>
+<!-- Search (on left as per JSON) -->
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="bg-surface-container-high border border-outline-variant rounded-full py-1.5 pl-9 pr-4 text-sm text-on-surface focus:outline-none focus:border-primary w-64" placeholder="Search Vehicle ID..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<!-- Filters -->
+<div class="hidden lg:flex items-center gap-2 mr-4 border-r border-outline-variant/30 pr-4">
+<span class="text-on-surface-variant font-label-md text-label-md uppercase mr-2">Priority:</span>
+<button class="px-3 py-1 rounded-full bg-error-container/20 text-error border border-error/30 font-label-md text-label-md hover:bg-error-container/40 transition-colors">High</button>
+<button class="px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant border border-outline-variant font-label-md text-label-md hover:text-on-surface transition-colors">Medium</button>
+<button class="px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant border border-outline-variant font-label-md text-label-md hover:text-on-surface transition-colors">Low</button>
+</div>
+<!-- Trailing Icons -->
+<button class="text-on-surface-variant hover:text-primary transition-opacity cursor-pointer active:opacity-80 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-opacity cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">contrast</span>
+</button>
+<!-- Primary Action -->
+<button class="bg-primary-container text-on-primary-container px-4 py-2 rounded-lg font-title-md text-title-md font-semibold hover:brightness-110 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">add</span> Quick Add
+                </button>
+<!-- Profile -->
+<img class="w-8 h-8 rounded-full border border-outline-variant object-cover cursor-pointer ml-2" data-alt="A small circular avatar image showing a professional fleet manager in a modern, dark-themed control room setting. High contrast, sharp focus, corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTG6PJ-9E-n7MOqqBIIbFgfZ4AvljT0bJusntJDRs4mZ-OQiFXJjP6WMGXKFcV3O9tOkSsNBKqIovMFIzloHwrLkf9tuXkikxL0SY1dnFrYLVwuos_CNpZ29Wp1jzmXxDiYMxtjI3_aH-iMmD-kBe1ck5gIjyaa7HW7cXgiFTLV8_mJ45tKl7r1MTh7GRX3MoXLlePTxURfV9AAiQGIwr5KDucUajCRzLDom87ybGz3ILRtt197yn--UpgGuzaqEZKO-n4dcrJvGY"/>
+</div>
+</header>
+<!-- Main Workspace -->
+<main class="flex-1 overflow-hidden mt-16 p-lg flex gap-lg">
+<!-- Kanban Board (Scrollable Container) -->
+<div class="flex-1 overflow-x-auto no-scrollbar flex gap-lg pb-4">
+<!-- Overdue Column -->
+<div class="w-[320px] flex-shrink-0 flex flex-col gap-sm">
+<div class="flex justify-between items-center bg-surface p-sm rounded-t-lg border-b-2 border-error">
+<h2 class="font-label-md text-label-md uppercase text-on-surface tracking-wider">Overdue</h2>
+<span class="bg-error-container/20 text-error px-2 py-0.5 rounded-full text-xs font-bold">2</span>
+</div>
+<div class="flex-1 overflow-y-auto pr-1 no-scrollbar flex flex-col gap-md">
+<!-- Card 1 -->
+<div class="bg-surface border border-error/30 rounded-lg p-md shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:border-error/60 transition-colors cursor-grab relative overflow-hidden group">
+<!-- High Priority Glow -->
+<div class="absolute top-0 left-0 w-1 h-full bg-error"></div>
+<div class="flex justify-between items-start mb-3">
+<div>
+<div class="font-title-md text-title-md font-semibold text-on-surface">Unit 4092</div>
+<div class="font-body-md text-body-md text-on-surface-variant text-sm mt-0.5">Engine Diagnostics</div>
+</div>
+<span class="bg-error-container/20 text-error px-2 py-1 rounded-full font-label-md text-label-md uppercase border border-error/20">High</span>
+</div>
+<div class="flex gap-2 mb-3 h-16">
+<div class="w-1/2 rounded bg-surface-container-high border border-outline-variant/30 overflow-hidden relative">
+<img class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" data-alt="A close-up thumbnail photo showing a greasy, damaged truck engine component in a dimly lit garage setting. High contrast, sharp focus, grimy industrial aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNiQTXUmO__18CQxKw6-iWnB_qrLeWWWlBOfmGBXiWWGMmgM6f22pDUvSygrEOu_ovoDCwFKYkKIbAI7VC09qh3E68MX0ms18Gvuf2IS7G8S1JMWb9X-bauFUKRR2seUnu4-TJ6acIRhMLxMb2GzZGo4beM_FOdhgC46bfle4800jPRW4c9hgVLvyUjvipAMVZNphqGT1EvoU54L_Md1t9qH_Ip9eFbhYNC72kLa5bsY3Waejz7FUbylQPQJQvSL9r79MiaVWIMS0"/>
+<div class="absolute bottom-1 left-1 bg-black/60 px-1 rounded text-[10px] text-white">Before</div>
+</div>
+<div class="w-1/2 rounded bg-surface-container flex items-center justify-center border border-dashed border-outline-variant/50">
+<span class="material-symbols-outlined text-outline text-sm">add_photo_alternate</span>
+</div>
+</div>
+<div class="flex justify-between items-end border-t border-outline-variant/30 pt-2 mt-2">
+<div class="flex items-center gap-1 text-error text-xs">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+<span>3 days late</span>
+</div>
+<div class="font-code-sm text-code-sm text-on-surface font-semibold bg-surface-container-high px-2 py-1 rounded">Est: $1,250</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Scheduled Column -->
+<div class="w-[320px] flex-shrink-0 flex flex-col gap-sm">
+<div class="flex justify-between items-center bg-surface p-sm rounded-t-lg border-b-2 border-secondary-container">
+<h2 class="font-label-md text-label-md uppercase text-on-surface tracking-wider">Scheduled</h2>
+<span class="bg-surface-container-high text-on-surface-variant px-2 py-0.5 rounded-full text-xs font-bold">1</span>
+</div>
+<div class="flex-1 overflow-y-auto pr-1 no-scrollbar flex flex-col gap-md">
+<!-- Card 3 -->
+<div class="bg-surface border border-outline-variant rounded-lg p-md hover:border-outline transition-colors cursor-grab relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-tertiary-container"></div>
+<div class="flex justify-between items-start mb-3">
+<div>
+<div class="font-title-md text-title-md font-semibold text-on-surface">Unit 1104</div>
+<div class="font-body-md text-body-md text-on-surface-variant text-sm mt-0.5">Tire Rotation &amp; Alignment</div>
+</div>
+<span class="bg-surface-container-high text-on-surface-variant px-2 py-1 rounded-full font-label-md text-label-md uppercase border border-outline-variant/50">Low</span>
+</div>
+<div class="flex justify-between items-end border-t border-outline-variant/30 pt-2 mt-2">
+<div class="flex items-center gap-1 text-on-surface-variant text-xs">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+<span>Tomorrow, 08:00 AM</span>
+</div>
+<div class="font-code-sm text-code-sm text-on-surface font-semibold bg-surface-container-high px-2 py-1 rounded">Est: $450</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Context Sidebar (Right) -->
+<div class="w-[340px] flex-shrink-0 hidden xl:flex flex-col gap-lg border-l border-outline-variant/30 pl-lg pb-4 overflow-y-auto no-scrollbar">
+<!-- Upcoming Calendar Widget -->
+<div class="bg-surface border border-outline-variant rounded-xl p-md shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-title-md text-title-md font-semibold text-on-surface">Upcoming Schedule</h3>
+<button class="text-primary hover:text-primary-container text-sm">View All</button>
+</div>
+<!-- Mini Calendar Header -->
+<div class="flex justify-between items-center mb-4 text-on-surface-variant bg-surface-container-low p-2 rounded-lg">
+<span class="material-symbols-outlined cursor-pointer hover:text-on-surface">chevron_left</span>
+<span class="font-label-md text-label-md font-bold text-on-surface">OCTOBER 2023</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-on-surface">chevron_right</span>
+</div>
+<!-- Event List -->
+<div class="flex flex-col gap-3">
+<div class="flex gap-3 items-start p-2 rounded-lg hover:bg-surface-container-low transition-colors">
+<div class="flex flex-col items-center bg-surface-container-high rounded p-2 min-w-[48px]">
+<span class="text-xs text-on-surface-variant font-bold">OCT</span>
+<span class="text-lg font-bold text-primary">24</span>
+</div>
+<div>
+<div class="font-title-md text-sm font-semibold text-on-surface">Annual Inspection: Fleet B</div>
+<div class="text-xs text-on-surface-variant mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">schedule</span> 09:00 AM - 12:00 PM
+                                </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

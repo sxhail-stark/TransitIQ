@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TransitIQ - Driver Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary": "#00344b",
+                      "on-secondary": "#05297a",
+                      "on-primary-fixed-variant": "#663d00",
+                      "error": "#ffb4ab",
+                      "surface-variant": "#333539",
+                      "surface-tint": "#ffb865",
+                      "outline-variant": "#534435",
+                      "primary-fixed-dim": "#ffb865",
+                      "on-secondary-container": "#9db2ff",
+                      "primary": "#ffb865",
+                      "on-surface-variant": "#d8c3af",
+                      "tertiary": "#83cfff",
+                      "inverse-on-surface": "#2f3035",
+                      "on-tertiary-fixed-variant": "#004c6b",
+                      "primary-fixed": "#ffddba",
+                      "secondary-fixed": "#dce1ff",
+                      "on-tertiary-container": "#003750",
+                      "tertiary-container": "#1ca6e3",
+                      "surface-dim": "#111317",
+                      "surface-container-highest": "#333539",
+                      "on-tertiary-fixed": "#001e2d",
+                      "on-error-container": "#ffdad6",
+                      "surface-bright": "#37393e",
+                      "on-primary": "#482a00",
+                      "on-secondary-fixed": "#00164e",
+                      "tertiary-fixed": "#c6e7ff",
+                      "surface-container-high": "#282a2e",
+                      "on-surface": "#e2e2e8",
+                      "outline": "#a08e7b",
+                      "on-primary-container": "#4c2c00",
+                      "surface": "#111317",
+                      "on-secondary-fixed-variant": "#264191",
+                      "surface-container-lowest": "#0c0e12",
+                      "background": "#111317",
+                      "primary-container": "#d98a16",
+                      "inverse-primary": "#875200",
+                      "secondary-container": "#264191",
+                      "surface-container-low": "#1a1c20",
+                      "secondary-fixed-dim": "#b6c4ff",
+                      "on-error": "#690005",
+                      "on-primary-fixed": "#2b1700",
+                      "surface-container": "#1e2024",
+                      "inverse-surface": "#e2e2e8",
+                      "tertiary-fixed-dim": "#83cfff",
+                      "secondary": "#b6c4ff",
+                      "error-container": "#93000a",
+                      "on-background": "#e2e2e8"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "sm": "8px",
+                      "base": "4px",
+                      "sidebar-width": "260px",
+                      "lg": "24px",
+                      "md": "16px",
+                      "container-max": "1440px",
+                      "xs": "4px",
+                      "xl": "32px",
+                      "2xl": "48px"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "display-lg": [
+                              "Inter"
+                      ],
+                      "title-md": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "code-sm": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "label-md": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "title-md": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "code-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-md": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen">
+<!-- TopNavBar -->
+<nav class="bg-surface/80 dark:bg-surface/80 backdrop-blur-xl h-16 fixed top-0 right-0 left-sidebar-width flex justify-between items-center px-lg w-full z-50">
+<div class="flex items-center gap-md">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant" style="font-variation-settings: 'FILL' 0;">search</span>
+<input class="bg-surface-container-high border border-outline-variant rounded-full py-1 pl-xl pr-md text-on-surface focus:outline-none focus:border-primary transition-colors font-body-md w-64" placeholder="Search drivers..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<div class="flex gap-md">
+<button class="text-on-surface-variant hover:text-primary transition-opacity cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-opacity cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">contrast</span>
+</button>
+</div>
+<button class="bg-primary-container text-white px-md py-sm rounded-lg font-label-md font-bold hover:bg-primary transition-colors flex items-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                Quick Add
+            </button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Fleet Manager Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a fleet manager, male, late 30s, wearing a dark gray polo shirt. Shot against a neutral, slightly luminous dark background with subtle blue rim lighting to match the corporate modern aesthetic of the logistics platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC01hfgOF8td8_3dhZ1Sc4lnZCCDZK01J0_NmI-DoPanoDmk_mgjsLwkokF1Upg9vT5OS2zch1P4bxXzxXdbsGmXEMdH9v81VepkLuUvyht6e_ghub3Z9OqH0FG0vMIQHoluBoy0NwkdpLHytuGNDAsnHN_CYGTN8l0RnLkXi40ENo0BBEOFtxDIq7h2siVOxqeRRge41GWp1aCCO1_dL0qe0pXGMh0zS8WslSaLuiklU1tQusyGUKfXT9rpsWGRXOqlTDV0eidZas"/>
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="w-sidebar-width h-screen fixed left-0 top-0 bg-surface dark:bg-surface border-r border-outline-variant flex flex-col z-40">
+<div class="p-lg flex items-center gap-md mb-md">
+<div class="w-10 h-10 rounded-lg overflow-hidden border border-outline-variant flex-shrink-0">
+<img alt="Fleet Manager Avatar" class="w-full h-full object-cover" data-alt="A stylized, glowing geometric logo representing a logistics network node, rendered in vibrant primary orange and secondary deep blue. The background is a stark, dark corporate tone to ensure high contrast and a premium technological feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsdGJxYrTpRhamj9RCM1-_qE0U9i9FCgrBG-AaeUKwFhqD9WiuTDQkw4mf6GQ3rG0IcXsl4MJMzi8_g5PlayxGUvekYUTE0AG6xp7U4ikPQovl6Eb0noTQbJ_Ur0AdkLMNOczFWMAC2R3vPsxa0HDLlUBz9ogmy0UAQb3IGfLo9XiolyL8tDFNQcv-9dK_-Z_88sQJAM1P2eKTnW2Jhp1OTUH5JpLGY-nhyeQj5BxAk08-mpVAS2Bc4s5TOhBQTX7OuXmnzsIKy4w"/>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">TransitIQ</h1>
+<p class="font-label-md text-label-md text-on-surface-variant">Fleet Manager</p>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto flex flex-col gap-sm px-sm">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded-md" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded-md" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">local_shipping</span>
+<span class="font-body-md text-body-md">Fleet</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm bg-primary-container/10 text-primary border-l-4 border-primary rounded-r-md" href="#">
+<span class="material-symbols-outlined text-[20px] text-white" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-body-md text-body-md font-medium">Drivers</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded-md" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">route</span>
+<span class="font-body-md text-body-md">Trips</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded-md" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">build</span>
+<span class="font-body-md text-body-md">Maintenance</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded-md" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">local_gas_station</span>
+<span class="font-body-md text-body-md">Fuel &amp; Expenses</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded-md" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">analytics</span>
+<span class="font-body-md text-body-md">Analytics</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded-md relative group" href="#">
+<div class="absolute inset-0 rounded-md bg-gradient-to-r from-secondary-container/20 to-primary-container/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<span class="material-symbols-outlined text-[20px] text-tertiary-container" style="font-variation-settings: 'FILL' 0;">smart_toy</span>
+<span class="font-body-md text-body-md relative z-10">AI Assistant</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded-md" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">notifications</span>
+<span class="font-body-md text-body-md">Notifications</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded-md mt-auto mb-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-sidebar-width mt-16 p-lg max-w-container-max mx-auto min-h-[calc(100vh-4rem)]">
+<!-- Header & Filters -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-md mb-lg">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Driver Management</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Monitor fleet operators, safety scores, and duty status.</p>
+</div>
+<div class="flex items-center gap-md bg-surface-container-low p-2 rounded-lg border border-outline-variant">
+<div class="flex items-center gap-sm px-sm border-r border-outline-variant">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">filter_list</span>
+<span class="font-label-md text-label-md text-on-surface-variant uppercase">Filters</span>
+</div>
+<select class="bg-transparent border-none text-on-surface font-body-md focus:ring-0 cursor-pointer">
+<option class="bg-surface" value="">Safety Score: All</option>
+<option class="bg-surface" value="high">&gt; 90 (Excellent)</option>
+<option class="bg-surface" value="med">70 - 90 (Good)</option>
+<option class="bg-surface" value="low">&lt; 70 (Needs Review)</option>
+</select>
+<select class="bg-transparent border-none text-on-surface font-body-md focus:ring-0 cursor-pointer">
+<option class="bg-surface" value="">License Expiry: All</option>
+<option class="bg-surface" value="30">&lt; 30 Days</option>
+<option class="bg-surface" value="90">&lt; 90 Days</option>
+</select>
+</div>
+</div>
+<!-- Drivers Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-lg">
+<!-- Driver Card 1 -->
+<div class="bg-surface rounded-xl border border-outline-variant p-md relative overflow-hidden group">
+<!-- AI Badge -->
+<div class="absolute top-0 right-0 bg-gradient-to-r from-secondary-container to-primary-container px-sm py-1 rounded-bl-lg flex items-center gap-1 shadow-[0_0_15px_rgba(30,58,138,0.4)]">
+<span class="material-symbols-outlined text-[14px] text-white">smart_toy</span>
+<span class="font-label-md text-[10px] text-white uppercase tracking-wider">Recommended for Heavy Cargo</span>
+</div>
+<div class="flex gap-md items-start">
+<div class="w-16 h-16 rounded-full overflow-hidden border-2 border-primary-container/50">
+<img alt="Driver Marcus Cole" class="w-full h-full object-cover" data-alt="A portrait of a male truck driver in his 40s, wearing a high-visibility vest. The lighting is dramatic and cinematic, typical of a modern corporate dashboard aesthetic, with deep shadows and subtle rim lighting against a dark grey background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDg58f_DzrXFFUXr4q16neIpLRxm8rpgzR8v-tLpJfxpg6oMSySKON87rPEm-0RqtiGxsju1s0DV8bm29FLqRL75nRtYfDiJtq26C1Eu0Reoamg0-NFW00uYZaghDTTrqqrV7oSpPQrZEKE5x4L0VNtlYrhTKSBWXIpj9t1JEYbpXQp-NXoh9fUu6zpmDEmurwX1Y-6jskdIPMbjAUrSATwdH2T7FoCKVphZXNCaP3sTUtB4wquEwtpxJ62XbQwGqGeeo5mg9ccYlo"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-title-md text-title-md text-on-surface">Marcus Cole</h3>
+<p class="font-code-sm text-code-sm text-on-surface-variant mt-1">ID: TRK-9921</p>
+</div>
+<!-- Status Pill -->
+<div class="bg-tertiary-container/20 border border-tertiary-container text-tertiary-container px-2 py-0.5 rounded-full flex items-center gap-1">
+<div class="w-1.5 h-1.5 rounded-full bg-tertiary-container"></div>
+<span class="font-label-md text-[10px] uppercase">On Duty</span>
+</div>
+</div>
+<div class="mt-sm flex gap-2">
+<span class="bg-surface-container-highest px-2 py-1 rounded text-xs text-on-surface border border-outline-variant/50">Class A CDL</span>
+<span class="bg-surface-container-highest px-2 py-1 rounded text-xs text-on-surface border border-outline-variant/50">Hazmat</span>
+</div>
+</div>
+</div>
+<div class="mt-md pt-md border-t border-outline-variant flex justify-between items-center">
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase mb-1">Safety Credit</p>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-primary">98</span>
+<span class="font-body-md text-body-md text-on-surface-variant">/ 100</span>
+</div>
+</div>
+<!-- Mock Radial Chart -->
+<div class="relative w-12 h-12">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 36 36">
+<path class="text-surface-container-highest" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
+<path class="text-primary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="98, 100" stroke-width="3"></path>
+</svg>
+</div>
+</div>
+</div>
+<!-- Driver Card 2 -->
+<div class="bg-surface rounded-xl border border-outline-variant p-md relative overflow-hidden">
+<div class="flex gap-md items-start">
+<div class="w-16 h-16 rounded-full overflow-hidden border-2 border-outline-variant">
+<img alt="Driver Sarah Jenkins" class="w-full h-full object-cover" data-alt="A portrait of a female delivery driver in her 30s, looking professional. The lighting is cinematic and modern, fitting a high-tech logistics dashboard, shot against a very dark, nearly black background with a hint of blue rim light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8nlO5dllf5o0Ka0qGw-hc-2UPgAd1_HhyesWLl5z6k698N5lHHMYmCE55oXBGfGyvYTZuHALZdWxtxTXl_dyjLkVzLJ1DXdZ6nbcR6XQ6wev4iqUzCoj5RKvcX9UM1MPbpT-rAn1sdaf07cRlqwWbCPFCBFfIe9L_kTvDzqcJb9vSEKDh55ELk104L9qplviTeg9w9si2arUj0N4Z-q_fffJTLt4-3UVYVX5fR0T7sk14I-SHqHCTIAXAlR6UlfE_ipglzuKUMFc"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-title-md text-title-md text-on-surface">Sarah Jenkins</h3>
+<p class="font-code-sm text-code-sm text-on-surface-variant mt-1">ID: LCL-4402</p>
+</div>
+<!-- Status Pill -->
+<div class="bg-surface-variant border border-outline-variant text-on-surface-variant px-2 py-0.5 rounded-full flex items-center gap-1">
+<div class="w-1.5 h-1.5 rounded-full bg-on-surface-variant"></div>
+<span class="font-label-md text-[10px] uppercase">Idle</span>
+</div>
+</div>
+<div class="mt-sm flex gap-2">
+<span class="bg-surface-container-highest px-2 py-1 rounded text-xs text-on-surface border border-outline-variant/50">Class B CDL</span>
+</div>
+</div>
+</div>
+<div class="mt-md pt-md border-t border-outline-variant flex justify-between items-center">
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase mb-1">Safety Credit</p>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-on-surface">85</span>
+<span class="font-body-md text-body-md text-on-surface-variant">/ 100</span>
+</div>
+</div>
+<!-- Mock Radial Chart -->
+<div class="relative w-12 h-12">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 36 36">
+<path class="text-surface-container-highest" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
+<path class="text-tertiary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="85, 100" stroke-width="3"></path>
+</svg>
+</div>
+</div>
+</div>
+<!-- Driver Card 3 -->
+<div class="bg-surface rounded-xl border border-outline-variant p-md relative overflow-hidden">
+<div class="flex gap-md items-start">
+<div class="w-16 h-16 rounded-full overflow-hidden border-2 border-outline-variant">
+<img alt="Driver David Ross" class="w-full h-full object-cover" data-alt="A portrait of an older male driver with a grey beard. The aesthetic is serious and professional, fitting a high-stakes transport application. Shot against a dark, minimalist background with crisp, cool lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuApjgmUAXa3QgFL95kvsrOPE-IsUXt_v-q46lGxWS-0RWMiVL4Exqs302SYu055gC0-RWkdQV1I42qTsp81_3mmNLZmz9pRFbvjDkD-69hDICXfVWd043pY4R07CqSlfGEwtBsHO1Vf9ZziyVD_o5V8bgTFeVjhDxRA460idsUce2S386_v7oD08qybWu5aj0DrTyP6pNYXIYp03dkB3y-vLixjhXYRRkdtwyZ2V85sG7fwADl6XBkat6sZ_0lNrV4EWfMhbsLKhuI"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-title-md text-title-md text-on-surface">David Ross</h3>
+<p class="font-code-sm text-code-sm text-on-surface-variant mt-1">ID: TRK-1099</p>
+</div>
+<!-- Status Pill -->
+<div class="bg-error/10 border border-error/50 text-error px-2 py-0.5 rounded-full flex items-center gap-1">
+<div class="w-1.5 h-1.5 rounded-full bg-error"></div>
+<span class="font-label-md text-[10px] uppercase">Leave</span>
+</div>
+</div>
+<div class="mt-sm flex gap-2">
+<span class="bg-surface-container-highest px-2 py-1 rounded text-xs text-on-surface border border-outline-variant/50">Class A CDL</span>
+<span class="bg-error/10 text-error border-error/30 px-2 py-1 rounded text-xs border">Exp in 12d</span>
+</div>
+</div>
+</div>
+<div class="mt-md pt-md border-t border-outline-variant flex justify-between items-center">
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase mb-1">Safety Credit</p>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-error">62</span>
+<span class="font-body-md text-body-md text-on-surface-variant">/ 100</span>
+</div>
+</div>
+<!-- Mock Radial Chart -->
+<div class="relative w-12 h-12">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 36 36">
+<path class="text-surface-container-highest" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
+<path class="text-error" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="62, 100" stroke-width="3"></path>
+</svg>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

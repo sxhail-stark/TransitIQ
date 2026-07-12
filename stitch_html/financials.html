@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Fuel &amp; Expenses - TransitIQ</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                            "on-tertiary": "#00344b",
+                            "on-secondary": "#05297a",
+                            "on-primary-fixed-variant": "#663d00",
+                            "error": "#ffb4ab",
+                            "surface-variant": "#333539",
+                            "surface-tint": "#ffb865",
+                            "outline-variant": "#534435",
+                            "primary-fixed-dim": "#ffb865",
+                            "on-secondary-container": "#9db2ff",
+                            "primary": "#ffb865",
+                            "on-surface-variant": "#d8c3af",
+                            "tertiary": "#83cfff",
+                            "inverse-on-surface": "#2f3035",
+                            "on-tertiary-fixed-variant": "#004c6b",
+                            "primary-fixed": "#ffddba",
+                            "secondary-fixed": "#dce1ff",
+                            "on-tertiary-container": "#003750",
+                            "tertiary-container": "#1ca6e3",
+                            "surface-dim": "#111317",
+                            "surface-container-highest": "#333539",
+                            "on-tertiary-fixed": "#001e2d",
+                            "on-error-container": "#ffdad6",
+                            "surface-bright": "#37393e",
+                            "on-primary": "#482a00",
+                            "on-secondary-fixed": "#00164e",
+                            "tertiary-fixed": "#c6e7ff",
+                            "surface-container-high": "#282a2e",
+                            "on-surface": "#e2e2e8",
+                            "outline": "#a08e7b",
+                            "on-primary-container": "#4c2c00",
+                            "surface": "#111317",
+                            "on-secondary-fixed-variant": "#264191",
+                            "surface-container-lowest": "#0c0e12",
+                            "background": "#111317",
+                            "primary-container": "#d98a16",
+                            "inverse-primary": "#875200",
+                            "secondary-container": "#264191",
+                            "surface-container-low": "#1a1c20",
+                            "secondary-fixed-dim": "#b6c4ff",
+                            "on-error": "#690005",
+                            "on-primary-fixed": "#2b1700",
+                            "surface-container": "#1e2024",
+                            "inverse-surface": "#e2e2e8",
+                            "tertiary-fixed-dim": "#83cfff",
+                            "secondary": "#b6c4ff",
+                            "error-container": "#93000a",
+                            "on-background": "#e2e2e8"
+                    },
+                    "borderRadius": {
+                            "DEFAULT": "0.25rem",
+                            "lg": "0.5rem",
+                            "xl": "0.75rem",
+                            "full": "9999px"
+                    },
+                    "spacing": {
+                            "sm": "8px",
+                            "base": "4px",
+                            "sidebar-width": "260px",
+                            "lg": "24px",
+                            "md": "16px",
+                            "container-max": "1440px",
+                            "xs": "4px",
+                            "xl": "32px",
+                            "2xl": "48px"
+                    },
+                    "fontFamily": {
+                            "headline-lg-mobile": ["Inter"],
+                            "body-lg": ["Inter"],
+                            "display-lg": ["Inter"],
+                            "title-md": ["Inter"],
+                            "headline-lg": ["Inter"],
+                            "body-md": ["Inter"],
+                            "code-sm": ["Inter"],
+                            "headline-md": ["Inter"],
+                            "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                            "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                            "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                            "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                            "title-md": ["18px", {"lineHeight": "28px", "fontWeight": "500"}],
+                            "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                            "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                            "code-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                            "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                            "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #0F1115; color: #e2e2e8; }
+        .glass-panel {
+            background: rgba(22, 25, 30, 0.8);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 1px solid rgba(255, 255, 255, 0.05);
+            border-right: 1px solid rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+        }
+        .ai-glow {
+            box-shadow: 0 0 15px rgba(30, 58, 138, 0.4);
+        }
+        .scroll-hidden::-webkit-scrollbar { display: none; }
+        .scroll-hidden { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Modal specific styles */
+        #invoice-modal {
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+        #invoice-modal.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        #invoice-modal.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md antialiased min-h-screen flex flex-col md:flex-row overflow-x-hidden">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col h-full w-sidebar-width fixed left-0 top-0 bg-surface dark:bg-surface border-r border-outline-variant z-40 text-on-surface-variant font-body-md text-body-md">
+<div class="p-lg flex items-center gap-md border-b border-outline-variant/30">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-headline-md text-headline-md font-bold">
+                T
+            </div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">TransitIQ</h1>
+<p class="font-label-md text-label-md opacity-70">Fleet Manager</p>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto py-md scroll-hidden flex flex-col gap-sm px-sm">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">local_shipping</span>
+                Fleet
+            </a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">person</span>
+                Drivers
+            </a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">route</span>
+                Trips
+            </a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">build</span>
+                Maintenance
+            </a>
+<a class="flex items-center gap-md px-md py-sm bg-primary-container/10 text-primary border-l-4 border-primary hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded-r-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">local_gas_station</span>
+                Fuel &amp; Expenses
+            </a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">analytics</span>
+                Analytics
+            </a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">smart_toy</span>
+                AI Assistant
+            </a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+                Notifications
+            </a>
+</nav>
+<div class="p-sm mt-auto">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+                Settings
+            </a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 w-full md:ml-sidebar-width min-h-screen bg-background relative flex flex-col">
+<!-- TopNavBar -->
+<header class="h-16 fixed top-0 right-0 left-0 md:left-sidebar-width bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-outline-variant z-30 flex justify-between items-center px-lg text-primary dark:text-primary font-label-md text-label-md">
+<div class="flex items-center gap-lg h-full">
+<button class="md:hidden text-on-surface-variant hover:text-primary transition-opacity cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="h-full flex items-end">
+<span class="text-primary font-bold border-b-2 border-primary pb-4 inline-block mt-4">Fuel &amp; Expenses</span>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant hover:text-primary transition-opacity cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-opacity cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">contrast</span>
+</button>
+<button class="hidden md:flex bg-primary-container text-on-primary-container px-4 py-2 rounded-lg font-label-md text-label-md items-center gap-sm hover:bg-opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                    Quick Add
+                </button>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden border border-outline-variant ml-sm cursor-pointer">
+<img alt="Fleet Manager Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAE-uWSjs17D55KkItP4aZxoGLgigRjDR5_6geLNFeTpMAn3cig70OPw_7WTUlTyZzlQecefS72--NLJUhgbJjpTlXRhgunuh79WVx_BISSWunJdV-8epB-5-y9bRo9uF9WAVpB5dQ5Xh8KpnFxpx2WVdKwBhlESrrBSzutNE1KGlwa9GAsgJto9qjXLdxWrwbvG1xpiOAiJ3bsWRsxvEQud1oDLuX-gxBmhwVrYTskdGFuykgeDdhvncc0QOVUWhLg4U3qnayI-U4"/>
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<div class="flex-1 mt-16 p-md md:p-lg grid grid-cols-1 lg:grid-cols-12 gap-lg max-w-container-max mx-auto w-full">
+<!-- Left Column: Logs & Upload -->
+<div class="lg:col-span-7 flex flex-col gap-lg">
+<!-- Action Bar -->
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-surface rounded-xl p-md border border-outline-variant/30">
+<div>
+<h2 class="font-title-md text-title-md text-on-surface">Recent Expenses</h2>
+<p class="font-body-md text-body-md text-on-surface-variant opacity-80 mt-1">Review and manage fleet operational costs.</p>
+</div>
+<div class="flex gap-sm w-full sm:w-auto">
+<button class="flex-1 sm:flex-none border border-outline-variant text-primary hover:bg-surface-container-high transition-colors px-4 py-2 rounded-lg font-label-md text-label-md flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                            Filter
+                        </button>
+<button class="flex-1 sm:flex-none bg-primary-container text-on-primary-container hover:bg-opacity-90 transition-opacity px-4 py-2 rounded-lg font-label-md text-label-md flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                            Add Expense
+                        </button>
+</div>
+</div>
+<!-- Dropzone -->
+<div class="border-2 border-dashed border-outline-variant/50 rounded-xl p-xl flex flex-col items-center justify-center text-center bg-surface/30 hover:bg-surface/50 transition-colors cursor-pointer group">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center mb-md group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-2xl">upload_file</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface mb-1">Upload Receipt</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-sm">Drag and drop your fuel receipts or invoices here, or click to browse. Supported formats: JPG, PNG, PDF.</p>
+</div>
+<!-- Expense Table -->
+<div class="bg-surface rounded-xl border border-outline-variant/50 overflow-hidden flex-1">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant/50 font-label-md text-label-md text-on-surface-variant uppercase">
+<th class="p-md font-semibold">Date</th>
+<th class="p-md font-semibold">Vehicle / Driver</th>
+<th class="p-md font-semibold">Category</th>
+<th class="p-md font-semibold text-right">Amount</th>
+<th class="p-md font-semibold text-center">Status</th>
+<th class="p-md font-semibold text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md divide-y divide-outline-variant/30">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="p-md whitespace-nowrap text-on-surface">Oct 24, 2023</td>
+<td class="p-md">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded bg-surface-container-high flex items-center justify-center text-xs font-bold text-primary">TR-04</div>
+<div>
+<div class="text-on-surface font-medium">Volvo VNL 860</div>
+<div class="text-on-surface-variant text-xs">J. Smith</div>
+</div>
+</div>
+</td>
+<td class="p-md">
+<span class="inline-flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">local_gas_station</span> Fuel
+                                        </span>
+</td>
+<td class="p-md text-right font-medium text-on-surface">$450.25</td>
+<td class="p-md text-center">
+<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-tertiary-container/20 text-tertiary border border-tertiary/30">
+                                            Processed
+                                        </span>
+</td>
+<td class="p-md text-right">
+<button class="text-primary hover:text-primary-container p-2 rounded-lg hover:bg-surface-container-high transition-colors" onclick="document.getElementById('invoice-modal').classList.remove('hidden'); document.getElementById('invoice-modal').classList.add('active');">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="bg-[#121418] hover:bg-surface-container-lowest transition-colors group">
+<td class="p-md whitespace-nowrap text-on-surface">Oct 23, 2023</td>
+<td class="p-md">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded bg-surface-container-high flex items-center justify-center text-xs font-bold text-primary">TR-12</div>
+<div>
+<div class="text-on-surface font-medium">Freightliner Cascadia</div>
+<div class="text-on-surface-variant text-xs">M. Johnson</div>
+</div>
+</div>
+</td>
+<td class="p-md">
+<span class="inline-flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">build</span> Repair
+                                        </span>
+</td>
+<td class="p-md text-right font-medium text-on-surface">$1,250.00</td>
+<td class="p-md text-center">
+<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-error/20 text-error border border-error/30">
+                                            Pending
+                                        </span>
+</td>
+<td class="p-md text-right">
+<button class="text-primary hover:text-primary-container p-2 rounded-lg hover:bg-surface-container-high transition-colors" onclick="document.getElementById('invoice-modal').classList.remove('hidden'); document.getElementById('invoice-modal').classList.add('active');">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="p-md whitespace-nowrap text-on-surface">Oct 22, 2023</td>
+<td class="p-md">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded bg-surface-container-high flex items-center justify-center text-xs font-bold text-primary">TR-04</div>
+<div>
+<div class="text-on-surface font-medium">Volvo VNL 860</div>
+<div class="text-on-surface-variant text-xs">J. Smith</div>
+</div>
+</div>
+</td>
+<td class="p-md">
+<span class="inline-flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">toll</span> Tolls
+                                        </span>
+</td>
+<td class="p-md text-right font-medium text-on-surface">$45.50</td>
+<td class="p-md text-center">
+<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-tertiary-container/20 text-tertiary border border-tertiary/30">
+                                            Processed
+                                        </span>
+</td>
+<td class="p-md text-right">
+<button class="text-primary hover:text-primary-container p-2 rounded-lg hover:bg-surface-container-high transition-colors" onclick="document.getElementById('invoice-modal').classList.remove('hidden'); document.getElementById('invoice-modal').classList.add('active');">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-sm border-t border-outline-variant/30 flex justify-center">
+<button class="text-on-surface-variant hover:text-primary text-sm py-1 px-4 transition-colors">View All Logs</button>
+</div>
+</div>
+</div>
+<!-- Right Column: Analytics -->
+<div class="lg:col-span-5 flex flex-col gap-lg">
+<!-- KPI Cards Row -->
+<div class="grid grid-cols-2 gap-md">
+<div class="bg-surface rounded-xl p-md border border-outline-variant/30 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-4xl text-primary">attach_money</span>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface-variant mb-2">Total Monthly Spend</h4>
+<div class="font-display-lg text-display-lg text-on-surface mb-2">$42,850</div>
+<div class="flex items-center gap-1 text-error text-sm font-medium">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span>+5.2% vs last month</span>
+</div>
+</div>
+<div class="bg-surface rounded-xl p-md border border-outline-variant/30 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-4xl text-tertiary">local_gas_station</span>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface-variant mb-2">Avg Fuel Economy</h4>
+<div class="font-display-lg text-display-lg text-on-surface mb-2">6.8 <span class="text-lg text-on-surface-variant">MPG</span></div>
+<div class="flex items-center gap-1 text-tertiary text-sm font-medium">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span>+0.3% vs last month</span>
+</div>
+</div>
+</div>
+<!-- Cost per KM Bar Chart (Simulated) -->
+<div class="bg-surface rounded-xl p-md border border-outline-variant/30 flex-1 min-h-[300px] flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-title-md text-title-md text-on-surface">Cost per KM Trend</h3>
+<select class="bg-surface-container-high border-none text-on-surface text-sm rounded-lg focus:ring-1 focus:ring-primary py-1 px-3">
+<option>Last 6 Months</option>
+<option>This Year</option>
+</select>
+</div>
+<div class="flex-1 flex items-end gap-2 px-2 pb-6 relative h-48">
+<!-- Y-Axis labels -->
+<div class="absolute left-0 top-0 bottom-6 flex flex-col justify-between text-xs text-on-surface-variant w-8">
+<span>$1.5</span>
+<span>$1.0</span>
+<span>$0.5</span>
+<span>$0</span>
+</div>
+<!-- Grid lines -->
+<div class="absolute left-10 right-0 top-1.5 h-px bg-outline-variant/20"></div>
+<div class="absolute left-10 right-0 top-1/3 h-px bg-outline-variant/20"></div>
+<div class="absolute left-10 right-0 top-2/3 h-px bg-outline-variant/20"></div>
+<!-- Bars -->
+<div class="flex-1 ml-10 flex items-end justify-between gap-2 h-full z-10">
+<div class="w-full flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-full bg-surface-container-highest group-hover:bg-primary-container/20 rounded-t-sm transition-colors h-[40%] relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-surface-bright text-xs py-1 px-2 rounded hidden group-hover:block whitespace-nowrap">$0.85</div>
+</div>
+<span class="text-xs text-on-surface-variant">May</span>
+</div>
+<div class="w-full flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-full bg-surface-container-highest group-hover:bg-primary-container/20 rounded-t-sm transition-colors h-[45%] relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-surface-bright text-xs py-1 px-2 rounded hidden group-hover:block whitespace-nowrap">$0.92</div>
+</div>
+<span class="text-xs text-on-surface-variant">Jun</span>
+</div>
+<div class="w-full flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-full bg-surface-container-highest group-hover:bg-primary-container/20 rounded-t-sm transition-colors h-[60%] relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-surface-bright text-xs py-1 px-2 rounded hidden group-hover:block whitespace-nowrap">$1.15</div>
+</div>
+<span class="text-xs text-on-surface-variant">Jul</span>
+</div>
+<div class="w-full flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-full bg-surface-container-highest group-hover:bg-primary-container/20 rounded-t-sm transition-colors h-[55%] relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-surface-bright text-xs py-1 px-2 rounded hidden group-hover:block whitespace-nowrap">$1.05</div>
+</div>
+<span class="text-xs text-on-surface-variant">Aug</span>
+</div>
+<div class="w-full flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-full bg-primary/80 group-hover:bg-primary rounded-t-sm transition-colors h-[75%] relative ai-glow">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-surface-bright text-xs py-1 px-2 rounded hidden group-hover:block whitespace-nowrap">$1.32</div>
+</div>
+<span class="text-xs text-on-surface-variant font-bold text-primary">Sep</span>
+</div>
+<div class="w-full flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-full bg-surface-container-highest group-hover:bg-primary-container/20 rounded-t-sm transition-colors h-[50%] relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-surface-bright text-xs py-1 px-2 rounded hidden group-hover:block whitespace-nowrap">$0.98</div>
+</div>
+<span class="text-xs text-on-surface-variant">Oct</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Expense Breakdown Pie Chart (Simulated) -->
+<div class="bg-surface rounded-xl p-md border border-outline-variant/30 flex-1 min-h-[250px] relative overflow-hidden">
+<h3 class="font-title-md text-title-md text-on-surface mb-4">Expense Breakdown</h3>
+<div class="flex items-center justify-center gap-8 h-full pb-8">
+<!-- Simulated Donut Chart -->
+<div class="w-40 h-40 rounded-full border-[16px] border-surface-container-high relative flex items-center justify-center">
+<!-- Conic gradient simulation for slices -->
+<div class="absolute inset-[-16px] rounded-full border-[16px] border-transparent" style="border-top-color: #d98a16; border-right-color: #d98a16; border-bottom-color: #264191; border-left-color: #534435; transform: rotate(45deg);">
+</div>
+<div class="bg-surface w-full h-full rounded-full absolute z-10 flex flex-col items-center justify-center">
+<span class="text-xl font-bold text-on-surface">100%</span>
+<span class="text-xs text-on-surface-variant">Total</span>
+</div>
+</div>
+<!-- Legend -->
+<div class="flex flex-col gap-3">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary-container"></div>
+<span class="text-sm text-on-surface">Fuel (65%)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-secondary-container"></div>
+<span class="text-sm text-on-surface">Repairs (20%)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-outline-variant"></div>
+<span class="text-sm text-on-surface">Tolls (10%)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-surface-container-highest"></div>
+<span class="text-sm text-on-surface">Tax &amp; Other (5%)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Invoice Preview Modal -->
+<div class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm" id="invoice-modal">
+<div class="glass-panel w-full max-w-2xl rounded-2xl shadow-2xl flex flex-col max-h-[921px]">
+<!-- Modal Header -->
+<div class="flex justify-between items-center p-md border-b border-outline-variant/30">
+<h3 class="font-headline-md text-headline-md text-on-surface">Invoice Preview</h3>
+<button class="text-on-surface-variant hover:text-error transition-colors p-1" onclick="document.getElementById('invoice-modal').classList.remove('active'); setTimeout(()=&gt;document.getElementById('invoice-modal').classList.add('hidden'), 300);">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Modal Body -->
+<div class="p-lg overflow-y-auto flex-1 flex flex-col md:flex-row gap-lg">
+<!-- Image/PDF Preview Area -->
+<div class="flex-1 bg-surface-container-lowest rounded-xl border border-outline-variant/30 flex items-center justify-center min-h-[300px] relative overflow-hidden group">
+<div class="absolute inset-0 bg-cover bg-center opacity-70 group-hover:opacity-100 transition-opacity" data-alt="A scanned fuel station receipt with crisp black text on white thermal paper, showing a transaction for diesel fuel. The receipt is slightly crumpled but highly legible, photographed top-down in bright, even lighting, creating a realistic document scanning context." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC2S9P7AqRWpuiOIHp5ylARuu9jhsLRlEvmrAO1Y5Xo7DFm_v-AEFCjz2qXtuJZBMlBc3o131_jbB6ujJ43oy7Mw8fe6HmLVRQ8nLCXcCUwm4p2ECZA4um7JiHLq4ZKoF_uLXZV_M-Li1x7FpeU1jHY8-Nx8e4fc9E_bilx8rF0umwa0MEfpIFM8Qv8-Z-Q-UEnW5MBSICXhO00ZV5wIqGurMcQUP7AD4QBOCahWWjikqIjKJhTzcvwk7gVcV3Ntvpilunpw60_zfk')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
+<div class="absolute bottom-4 right-4 flex gap-2">
+<button class="bg-surface/80 backdrop-blur p-2 rounded hover:bg-primary-container hover:text-on-primary-container transition-colors text-on-surface">
+<span class="material-symbols-outlined text-sm">zoom_in</span>
+</button>
+</div>
+</div>
+<!-- Details Area -->
+<div class="w-full md:w-64 flex flex-col gap-4">
+<div class="bg-surface rounded-lg p-sm border border-outline-variant/20">
+<span class="text-xs text-on-surface-variant block mb-1">Status</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-tertiary-container/20 text-tertiary border border-tertiary/30">Processed via AI</span>
+</div>
+<div>
+<span class="text-xs text-on-surface-variant block mb-1">Extracted Data</span>
+<div class="space-y-3 mt-2">
+<div>
+<label class="text-xs text-on-surface-variant opacity-70 block">Merchant</label>
+<div class="text-sm text-on-surface font-medium border-b border-outline-variant/30 pb-1">Pilot Travel Center #402</div>
+</div>
+<div>
+<label class="text-xs text-on-surface-variant opacity-70 block">Date</label>
+<div class="text-sm text-on-surface font-medium border-b border-outline-variant/30 pb-1">Oct 24, 2023 - 14:32</div>
+</div>
+<div>
+<label class="text-xs text-on-surface-variant opacity-70 block">Amount</label>
+<div class="text-lg text-primary font-bold border-b border-outline-variant/30 pb-1">$450.25</div>
+</div>
+<div>
+<label class="text-xs text-on-surface-variant opacity-70 block">Vehicle ID Mapping</label>
+<div class="text-sm text-on-surface font-medium border-b border-outline-variant/30 pb-1">TR-04 (Auto-matched)</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="p-md border-t border-outline-variant/30 flex justify-end gap-sm bg-surface-container-low rounded-b-2xl">
+<button class="px-4 py-2 rounded-lg border border-outline-variant text-primary hover:bg-surface-container-high transition-colors font-label-md" onclick="document.getElementById('invoice-modal').classList.remove('active'); setTimeout(()=&gt;document.getElementById('invoice-modal').classList.add('hidden'), 300);">Close</button>
+<button class="px-4 py-2 rounded-lg bg-primary-container text-on-primary-container hover:bg-opacity-90 transition-opacity font-label-md flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+                    Edit Details
+                </button>
+</div>
+</div>
+</div>
+</body></html>

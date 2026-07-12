@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TransitIQ - Notifications</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#00344b",
+                        "on-secondary": "#05297a",
+                        "on-primary-fixed-variant": "#663d00",
+                        "error": "#ffb4ab",
+                        "surface-variant": "#333539",
+                        "surface-tint": "#ffb865",
+                        "outline-variant": "#534435",
+                        "primary-fixed-dim": "#ffb865",
+                        "on-secondary-container": "#9db2ff",
+                        "primary": "#ffb865",
+                        "on-surface-variant": "#d8c3af",
+                        "tertiary": "#83cfff",
+                        "inverse-on-surface": "#2f3035",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "primary-fixed": "#ffddba",
+                        "secondary-fixed": "#dce1ff",
+                        "on-tertiary-container": "#003750",
+                        "tertiary-container": "#1ca6e3",
+                        "surface-dim": "#111317",
+                        "surface-container-highest": "#333539",
+                        "on-tertiary-fixed": "#001e2d",
+                        "on-error-container": "#ffdad6",
+                        "surface-bright": "#37393e",
+                        "on-primary": "#482a00",
+                        "on-secondary-fixed": "#00164e",
+                        "tertiary-fixed": "#c6e7ff",
+                        "surface-container-high": "#282a2e",
+                        "on-surface": "#e2e2e8",
+                        "outline": "#a08e7b",
+                        "on-primary-container": "#4c2c00",
+                        "surface": "#111317",
+                        "on-secondary-fixed-variant": "#264191",
+                        "surface-container-lowest": "#0c0e12",
+                        "background": "#111317",
+                        "primary-container": "#d98a16",
+                        "inverse-primary": "#875200",
+                        "secondary-container": "#264191",
+                        "surface-container-low": "#1a1c20",
+                        "secondary-fixed-dim": "#b6c4ff",
+                        "on-error": "#690005",
+                        "on-primary-fixed": "#2b1700",
+                        "surface-container": "#1e2024",
+                        "inverse-surface": "#e2e2e8",
+                        "tertiary-fixed-dim": "#83cfff",
+                        "secondary": "#b6c4ff",
+                        "error-container": "#93000a",
+                        "on-background": "#e2e2e8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "base": "4px",
+                        "sidebar-width": "260px",
+                        "lg": "24px",
+                        "md": "16px",
+                        "container-max": "1440px",
+                        "xs": "4px",
+                        "xl": "32px",
+                        "2xl": "48px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "title-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "code-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "title-md": ["18px", { "lineHeight": "28px", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "code-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen overflow-x-hidden selection:bg-primary-container/30 selection:text-primary">
+<!-- Top Navigation -->
+<header class="bg-surface/80 dark:bg-surface/80 backdrop-blur-xl h-16 fixed top-0 right-0 left-0 md:left-sidebar-width border-b border-outline-variant z-40">
+<div class="flex justify-between items-center px-lg w-full h-full">
+<div class="flex items-center gap-md">
+<!-- Search on left as per JSON -->
+<div class="relative hidden sm:flex items-center bg-surface-container-low rounded-full border border-surface-variant focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all duration-200 px-4 py-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px] mr-2" data-icon="search">search</span>
+<input class="bg-transparent border-none text-body-md text-on-surface focus:ring-0 w-64 placeholder:text-on-surface-variant/50 p-0" placeholder="Search alerts..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<div class="flex items-center gap-sm">
+<button aria-label="Notifications" class="text-on-surface-variant hover:text-primary transition-opacity cursor-pointer active:opacity-80 p-2 rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined text-[24px]" data-icon="notifications">notifications</span>
+</button>
+<button aria-label="Theme Contrast" class="text-on-surface-variant hover:text-primary transition-opacity cursor-pointer active:opacity-80 p-2 rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined text-[24px]" data-icon="contrast">contrast</span>
+</button>
+</div>
+<button class="bg-primary-container text-on-primary-container hover:bg-primary-container/90 px-4 py-2 rounded-lg font-label-md text-label-md transition-colors shadow-[0_0_15px_rgba(217,138,22,0.2)]">
+                    Quick Add
+                </button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant cursor-pointer hover:border-primary transition-colors">
+<img alt="Fleet Manager Profile" class="w-full h-full object-cover" data-alt="A futuristic portrait of a professional fleet logistics manager wearing a dark, sleek corporate uniform with subtle glowing orange technological accents. The lighting is dramatic and moody, set against a deep space dark background characteristic of a high-tech mission control center." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsH5BZJJ5s_XyBGaUSAh-bkaCgFhoni8QtIv31ymCL0Wq5ytN6uhbizgRGbc3becbLpozuEtKvl9OaalebGHZwKSsMmLRHPdHkFXYt3rtrMGd0UiWrcvlMUgEQDh5M30TWnfBnPJggGqHhS4f9aiprgaP9BvzgCyTSVnkEVuLAWsm7CE7E9I3uE9bqTuKRTnwwOKDpSkBYOPZEsnGKhZanatXNZHMHehe9aNN1gdAFYIJaeUOBd6mWqqhLLvc3-mmHfptEbsJuFRI"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Sidebar Navigation -->
+<nav class="bg-surface dark:bg-surface w-sidebar-width h-screen fixed left-0 top-0 border-r border-outline-variant z-50 flex flex-col hidden md:flex">
+<div class="p-lg flex items-center gap-4 border-b border-outline-variant/30">
+<div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined text-[24px]">local_shipping</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">TransitIQ</h1>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase">Fleet Manager</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto py-md custom-scrollbar">
+<div class="flex flex-col h-full gap-sm">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-title-md text-title-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="local_shipping">local_shipping</span>
+<span class="font-title-md text-title-md">Fleet</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-title-md text-title-md">Drivers</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="route">route</span>
+<span class="font-title-md text-title-md">Trips</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="build">build</span>
+<span class="font-title-md text-title-md">Maintenance</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="local_gas_station">local_gas_station</span>
+<span class="font-title-md text-title-md">Fuel &amp; Expenses</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-title-md text-title-md">Analytics</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="font-title-md text-title-md">AI Assistant</span>
+</a>
+<!-- Active State -->
+<a class="flex items-center gap-md px-md py-sm bg-primary-container/10 text-primary border-l-4 border-primary cursor-pointer active:scale-95 duration-200 relative overflow-hidden group" href="#">
+<div class="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<span class="material-symbols-outlined relative z-10" data-icon="notifications" data-weight="fill">notifications</span>
+<span class="font-title-md text-title-md font-medium relative z-10">Notifications</span>
+<span class="ml-auto bg-error text-on-error font-label-md text-label-md px-2 py-0.5 rounded-full text-[10px]">12</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-title-md text-title-md">Settings</span>
+</a>
+</div>
+</div>
+<div class="p-md border-t border-outline-variant/30 text-center">
+<p class="font-code-sm text-code-sm text-on-surface-variant/50">System Status: <span class="text-secondary">Nominal</span></p>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="pt-16 md:pl-sidebar-width min-h-screen flex flex-col relative z-0 pb-24 md:pb-0">
+<!-- Subtle Grid Background -->
+<div class="absolute inset-0 pointer-events-none opacity-5" style="background-image: linear-gradient(#333539 1px, transparent 1px), linear-gradient(90deg, #333539 1px, transparent 1px); background-size: 40px 40px;"></div>
+<div class="max-w-[1440px] mx-auto w-full p-lg xl:p-2xl flex-1 relative z-10">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md mb-xl">
+<div>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface font-semibold tracking-tight mb-2">Notification Center</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Monitor real-time system alerts, critical maintenance issues, and financial updates across your active fleet operations.</p>
+</div>
+<div class="flex gap-sm">
+<button class="bg-surface-container-high hover:bg-surface-variant text-on-surface border border-outline-variant px-4 py-2 rounded-lg font-label-md text-label-md uppercase tracking-wider transition-colors flex items-center gap-2 group">
+<span class="material-symbols-outlined text-[18px] group-hover:text-primary transition-colors" data-icon="done_all">done_all</span>
+                        Mark All Read
+                    </button>
+<button class="bg-surface-container-high hover:bg-surface-variant text-on-surface border border-outline-variant px-4 py-2 rounded-lg font-label-md text-label-md uppercase tracking-wider transition-colors flex items-center gap-2 group hover:border-error/50">
+<span class="material-symbols-outlined text-[18px] group-hover:text-error transition-colors" data-icon="delete">delete</span>
+                        Clear All
+                    </button>
+</div>
+</div>
+<!-- Dashboard Layout (Bento-style structure) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg items-start">
+<!-- Left Column: Filters & Summary (3 cols) -->
+<div class="lg:col-span-3 flex flex-col gap-lg sticky top-24">
+<!-- Alert Categories -->
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-md shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest mb-4 border-b border-outline-variant pb-2">Categories</h3>
+<div class="flex flex-col gap-2">
+<label class="flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex items-center gap-3">
+<input checked="" class="form-checkbox bg-surface-dim border-outline-variant text-primary rounded w-4 h-4 focus:ring-primary focus:ring-offset-surface" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary transition-colors">All Alerts</span>
+</div>
+<span class="bg-surface-variant text-on-surface-variant font-code-sm text-code-sm px-2 py-0.5 rounded-full">42</span>
+</label>
+<label class="flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex items-center gap-3">
+<input checked="" class="form-checkbox bg-surface-dim border-outline-variant text-error rounded w-4 h-4 focus:ring-error focus:ring-offset-surface" type="checkbox"/>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-error shadow-[0_0_8px_rgba(255,180,171,0.6)]"></div>
+<span class="font-body-md text-body-md text-on-surface group-hover:text-error transition-colors">High Priority</span>
+</div>
+</div>
+<span class="bg-error/20 text-error border border-error/30 font-code-sm text-code-sm px-2 py-0.5 rounded-full">3</span>
+</label>
+<label class="flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex items-center gap-3">
+<input checked="" class="form-checkbox bg-surface-dim border-outline-variant text-primary rounded w-4 h-4 focus:ring-primary focus:ring-offset-surface" type="checkbox"/>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_rgba(255,184,101,0.6)]"></div>
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary transition-colors">Maintenance</span>
+</div>
+</div>
+<span class="bg-primary/20 text-primary border border-primary/30 font-code-sm text-code-sm px-2 py-0.5 rounded-full">12</span>
+</label>
+<label class="flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex items-center gap-3">
+<input checked="" class="form-checkbox bg-surface-dim border-outline-variant text-secondary rounded w-4 h-4 focus:ring-secondary focus:ring-offset-surface" type="checkbox"/>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_rgba(182,196,255,0.6)]"></div>
+<span class="font-body-md text-body-md text-on-surface group-hover:text-secondary transition-colors">Safety</span>
+</div>
+</div>
+<span class="bg-secondary/20 text-secondary border border-secondary/30 font-code-sm text-code-sm px-2 py-0.5 rounded-full">8</span>
+</label>
+<label class="flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex items-center gap-3">
+<input checked="" class="form-checkbox bg-surface-dim border-outline-variant text-tertiary rounded w-4 h-4 focus:ring-tertiary focus:ring-offset-surface" type="checkbox"/>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_rgba(131,207,255,0.6)]"></div>
+<span class="font-body-md text-body-md text-on-surface group-hover:text-tertiary transition-colors">Licensing</span>
+</div>
+</div>
+<span class="bg-tertiary/20 text-tertiary border border-tertiary/30 font-code-sm text-code-sm px-2 py-0.5 rounded-full">4</span>
+</label>
+<label class="flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex items-center gap-3">
+<input checked="" class="form-checkbox bg-surface-dim border-outline-variant text-[emerald-400] rounded w-4 h-4 focus:ring-[emerald-400] focus:ring-offset-surface" type="checkbox"/>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-[#34d399] shadow-[0_0_8px_rgba(52,211,153,0.6)]"></div>
+<span class="font-body-md text-body-md text-on-surface group-hover:text-[#34d399] transition-colors">Financial</span>
+</div>
+</div>
+<span class="bg-[#34d399]/20 text-[#34d399] border border-[#34d399]/30 font-code-sm text-code-sm px-2 py-0.5 rounded-full">15</span>
+</label>
+</div>
+</div>
+<!-- AI Insights Mini-Card -->
+<div class="bg-surface-container-low border border-secondary-container/50 rounded-xl p-md relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-secondary-container/20 to-transparent opacity-50"></div>
+<div class="absolute -top-4 -right-4 w-16 h-16 bg-secondary-container blur-2xl rounded-full opacity-30"></div>
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-secondary" data-icon="auto_awesome">auto_awesome</span>
+<h3 class="font-label-md text-label-md text-secondary uppercase tracking-widest">AI Insight</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4 leading-relaxed">
+                                You have a cluster of <span class="text-primary font-medium">Brake System Warnings</span> occurring across Fleet C. Scheduling preventative maintenance for all 4 trucks this week could prevent major downtime.
+                            </p>
+<button class="text-secondary font-label-md text-label-md uppercase tracking-wider hover:text-secondary-fixed transition-colors flex items-center gap-1">
+                                View Analysis <span class="material-symbols-outlined text-[16px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Right Column: Timeline (9 cols) -->
+<div class="lg:col-span-9 bg-surface-container-low border border-outline-variant rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.5)] p-0 overflow-hidden">
+<!-- Timeline Header -->
+<div class="bg-surface-container px-lg py-md border-b border-outline-variant flex items-center justify-between sticky top-0 z-20">
+<h3 class="font-title-md text-title-md text-on-surface font-medium">Activity Timeline</h3>
+<div class="flex items-center gap-2 bg-surface-dim rounded-lg p-1 border border-outline-variant">
+<button class="bg-surface-variant text-on-surface px-3 py-1 rounded-md font-label-md text-label-md transition-colors shadow-sm">Recent</button>
+<button class="text-on-surface-variant hover:text-on-surface px-3 py-1 rounded-md font-label-md text-label-md transition-colors">Critical</button>
+<button class="text-on-surface-variant hover:text-on-surface px-3 py-1 rounded-md font-label-md text-label-md transition-colors">Archived</button>
+</div>
+</div>
+<!-- Timeline Content -->
+<div class="p-lg relative">
+<!-- Vertical Line -->
+<div class="absolute left-[47px] top-lg bottom-lg w-px bg-outline-variant/50 hidden sm:block"></div>
+<div class="flex flex-col gap-6">
+<!-- Date Group: Today -->
+<div class="relative z-10">
+<div class="flex items-center gap-4 mb-6">
+<div class="bg-surface-container-highest px-3 py-1 rounded-full border border-outline-variant/50 font-label-md text-label-md text-on-surface-variant shadow-sm z-10 relative">
+                                        Today
+                                    </div>
+<div class="h-px bg-outline-variant/30 flex-1"></div>
+</div>
+<div class="flex flex-col gap-lg pl-0 sm:pl-12">
+<!-- High Priority (Error) -->
+<div class="relative group">
+<!-- Node -->
+<div class="absolute -left-12 top-1 w-6 h-6 rounded-full bg-surface-dim border-2 border-error flex items-center justify-center z-10 shadow-[0_0_10px_rgba(255,180,171,0.4)] hidden sm:flex">
+<div class="w-2 h-2 rounded-full bg-error animate-pulse"></div>
+</div>
+<!-- Card -->
+<div class="bg-surface/50 border border-error/30 rounded-xl p-md hover:bg-surface-container transition-colors shadow-sm relative overflow-hidden backdrop-blur-sm">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-error"></div>
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<span class="bg-error/10 text-error border border-error/20 px-2 py-0.5 rounded font-label-md text-label-md flex items-center gap-1 uppercase">
+<span class="material-symbols-outlined text-[14px]" data-icon="warning">warning</span> Critical
+                                                    </span>
+<span class="text-on-surface-variant font-code-sm text-code-sm">10:42 AM</span>
+</div>
+<div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1 hover:bg-surface-variant rounded text-on-surface-variant hover:text-on-surface transition-colors" title="Mark as Read"><span class="material-symbols-outlined text-[18px]" data-icon="check_circle">check_circle</span></button>
+<button class="p-1 hover:bg-surface-variant rounded text-on-surface-variant hover:text-on-surface transition-colors" title="Dismiss"><span class="material-symbols-outlined text-[18px]" data-icon="close">close</span></button>
+</div>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface mb-1">Engine Temperature Critical - Unit TRK-4092</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Coolant temperature exceeded threshold (235°F) for over 5 minutes while climbing grade on I-70 West. Driver has been alerted to pull over safely.</p>
+<div class="flex flex-wrap gap-3">
+<button class="bg-error/10 hover:bg-error/20 text-error border border-error/30 px-4 py-2 rounded-lg font-label-md text-label-md uppercase transition-colors">
+                                                    Contact Driver
+                                                </button>
+<button class="bg-surface-container-high hover:bg-surface-variant text-on-surface border border-outline-variant px-4 py-2 rounded-lg font-label-md text-label-md uppercase transition-colors">
+                                                    View Telemetry
+                                                </button>
+</div>
+</div>
+</div>
+<!-- Maintenance (Primary/Orange) -->
+<div class="relative group">
+<!-- Node -->
+<div class="absolute -left-12 top-1 w-6 h-6 rounded-full bg-surface-dim border-2 border-primary flex items-center justify-center z-10 shadow-[0_0_10px_rgba(255,184,101,0.2)] hidden sm:flex">
+<span class="material-symbols-outlined text-[12px] text-primary" data-icon="build">build</span>
+</div>
+<!-- Card -->
+<div class="bg-surface/50 border border-outline-variant rounded-xl p-md hover:bg-surface-container transition-colors shadow-sm relative backdrop-blur-sm">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<span class="bg-primary/10 text-primary border border-primary/20 px-2 py-0.5 rounded font-label-md text-label-md flex items-center gap-1 uppercase">
+                                                        Maintenance
+                                                    </span>
+<span class="text-on-surface-variant font-code-sm text-code-sm">08:15 AM</span>
+</div>
+<button class="p-1 hover:bg-surface-variant rounded text-on-surface-variant hover:text-on-surface transition-colors opacity-0 group-hover:opacity-100"><span class="material-symbols-outlined text-[18px]" data-icon="more_vert">more_vert</span></button>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface mb-1">Upcoming PM Service: Fleet A</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">3 vehicles (TRK-102, TRK-105, TRK-118) are approaching their 50k mile preventative maintenance interval within the next 1,000 miles.</p>
+<button class="bg-surface-container-high hover:bg-surface-variant text-on-surface border border-outline-variant px-4 py-2 rounded-lg font-label-md text-label-md uppercase transition-colors">
+                                                Schedule Service
+                                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Date Group: Yesterday -->
+<div class="relative z-10 mt-4">
+<div class="flex items-center gap-4 mb-6">
+<div class="bg-surface-container-highest px-3 py-1 rounded-full border border-outline-variant/50 font-label-md text-label-md text-on-surface-variant shadow-sm z-10 relative">
+                                        Yesterday
+                                    </div>
+<div class="h-px bg-outline-variant/30 flex-1"></div>
+</div>
+<div class="flex flex-col gap-lg pl-0 sm:pl-12">
+<!-- Safety (Secondary/Blue) -->
+<div class="relative group opacity-80 hover:opacity-100 transition-opacity">
+<div class="absolute -left-12 top-1 w-6 h-6 rounded-full bg-surface-dim border-2 border-secondary flex items-center justify-center z-10 hidden sm:flex">
+<span class="material-symbols-outlined text-[12px] text-secondary" data-icon="videocam">videocam</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant/50 rounded-xl p-md hover:bg-surface-container transition-colors relative">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary rounded-l-xl"></div>
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<span class="bg-secondary/10 text-secondary border border-secondary/20 px-2 py-0.5 rounded font-label-md text-label-md flex items-center gap-1 uppercase">
+                                                        Safety Event
+                                                    </span>
+<span class="text-on-surface-variant font-code-sm text-code-sm">4:30 PM</span>
+</div>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface/80 mb-1">Hard Braking Detected</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Dashcam triggered a harsh event recording for driver M. Johnson on Route 88. Deceleration force exceeded 0.5g.</p>
+<div class="flex items-center gap-4 mt-2 p-3 bg-surface-dim rounded-lg border border-outline-variant/30">
+<div class="w-16 h-12 bg-surface-variant rounded flex items-center justify-center relative overflow-hidden group/vid cursor-pointer">
+<img alt="Dashcam Thumbnail" class="w-full h-full object-cover opacity-50 group-hover/vid:opacity-100 transition-opacity" data-alt="A low-resolution, high-contrast monochrome still frame from a commercial truck dashboard camera. The view looks out over a dark highway at dusk, with the blurred red tail lights of a suddenly stopping sedan directly ahead, emphasizing a close-call sudden braking scenario." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFF6q0Ct1D0fMAerNzA0Kw3b3dPEbjF1pUKuudF19fEjttGYHoTZuNBBvgZwc8yZ3_IfN6uyZyvXsMZ9COAziKutUEa_-ESj8hjvv4cAH221zrFxhJfoqYL8G68jeXwIhwdCpV5DJyGn562MavKtixVxb_KieFYnDVny8lfMu-hArmoV0-Bp9bm-r0XWcge6Prvdjivo3wyEvpL3EWWn0d856_Uy72jMhQVn2vxqkxpXxBvya-fotFG7xNw1BFwZiTi08CE-P5iIU"/>
+<span class="material-symbols-outlined text-white absolute" data-icon="play_circle">play_circle</span>
+</div>
+<div class="flex-1">
+<p class="font-code-sm text-code-sm text-on-surface-variant">Event Video (12s)</p>
+<button class="text-secondary hover:text-secondary-fixed text-sm font-medium mt-1">Review Footage</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Success (Green) -->
+<div class="relative group opacity-80 hover:opacity-100 transition-opacity">
+<div class="absolute -left-12 top-1 w-6 h-6 rounded-full bg-surface-dim border-2 border-[#34d399] flex items-center justify-center z-10 hidden sm:flex">
+<span class="material-symbols-outlined text-[12px] text-[#34d399]" data-icon="payments">payments</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant/50 rounded-xl p-md hover:bg-surface-container transition-colors relative">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-[#34d399] rounded-l-xl"></div>
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<span class="bg-[#34d399]/10 text-[#34d399] border border-[#34d399]/20 px-2 py-0.5 rounded font-label-md text-label-md flex items-center gap-1 uppercase">
+                                                        Financial
+                                                    </span>
+<span class="text-on-surface-variant font-code-sm text-code-sm">11:00 AM</span>
+</div>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface/80 mb-1">Invoice Settled: Logistics Corp</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Payment of $14,250.00 received and reconciled for Q3 Midwest Distribution Contract.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-outline-variant bg-surface-container flex justify-center">
+<button class="text-on-surface-variant hover:text-primary font-label-md text-label-md uppercase tracking-wider transition-colors flex items-center gap-2">
+                            Load Older Notifications
+                            <span class="material-symbols-outlined text-[18px]" data-icon="expand_more">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-surface/90 backdrop-blur-xl border-t border-outline-variant z-50 pb-safe">
+<div class="flex justify-around items-center h-16">
+<a class="flex flex-col items-center justify-center w-full h-full text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]" data-icon="dashboard">dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]" data-icon="local_shipping">local_shipping</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full text-primary relative" href="#">
+<span class="absolute top-2 right-6 w-2 h-2 rounded-full bg-error"></span>
+<span class="material-symbols-outlined text-[24px]" data-icon="notifications" data-weight="fill">notifications</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]" data-icon="settings">settings</span>
+</a>
+</div>
+</nav>
+</body></html>

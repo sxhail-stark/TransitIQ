@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TransitIQ - Executive Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#00344b",
+                        "on-secondary": "#05297a",
+                        "on-primary-fixed-variant": "#663d00",
+                        "error": "#ffb4ab",
+                        "surface-variant": "#333539",
+                        "surface-tint": "#ffb865",
+                        "outline-variant": "#534435",
+                        "primary-fixed-dim": "#ffb865",
+                        "on-secondary-container": "#9db2ff",
+                        "primary": "#ffb865",
+                        "on-surface-variant": "#d8c3af",
+                        "tertiary": "#83cfff",
+                        "inverse-on-surface": "#2f3035",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "primary-fixed": "#ffddba",
+                        "secondary-fixed": "#dce1ff",
+                        "on-tertiary-container": "#003750",
+                        "tertiary-container": "#1ca6e3",
+                        "surface-dim": "#111317",
+                        "surface-container-highest": "#333539",
+                        "on-tertiary-fixed": "#001e2d",
+                        "on-error-container": "#ffdad6",
+                        "surface-bright": "#37393e",
+                        "on-primary": "#482a00",
+                        "on-secondary-fixed": "#00164e",
+                        "tertiary-fixed": "#c6e7ff",
+                        "surface-container-high": "#282a2e",
+                        "on-surface": "#e2e2e8",
+                        "outline": "#a08e7b",
+                        "on-primary-container": "#4c2c00",
+                        "surface": "#111317",
+                        "on-secondary-fixed-variant": "#264191",
+                        "surface-container-lowest": "#0c0e12",
+                        "background": "#111317",
+                        "primary-container": "#d98a16",
+                        "inverse-primary": "#875200",
+                        "secondary-container": "#264191",
+                        "surface-container-low": "#1a1c20",
+                        "secondary-fixed-dim": "#b6c4ff",
+                        "on-error": "#690005",
+                        "on-primary-fixed": "#2b1700",
+                        "surface-container": "#1e2024",
+                        "inverse-surface": "#e2e2e8",
+                        "tertiary-fixed-dim": "#83cfff",
+                        "secondary": "#b6c4ff",
+                        "error-container": "#93000a",
+                        "on-background": "#e2e2e8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "base": "4px",
+                        "sidebar-width": "260px",
+                        "lg": "24px",
+                        "md": "16px",
+                        "container-max": "1440px",
+                        "xs": "4px",
+                        "xl": "32px",
+                        "2xl": "48px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "title-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "code-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "title-md": ["18px", { "lineHeight": "28px", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "code-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-surface'); }
+        
+        /* Chart Styles */
+        .chart-grid {
+            background-image: linear-gradient(theme('colors.surface-variant') 1px, transparent 1px),
+                              linear-gradient(90deg, theme('colors.surface-variant') 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.1;
+        }
+        
+        .line-chart-path {
+            fill: none;
+            stroke: theme('colors.primary');
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 4px 10px rgba(255, 184, 101, 0.4));
+        }
+        
+        .area-chart-path {
+            fill: url(#area-gradient);
+            stroke: theme('colors.tertiary');
+            stroke-width: 2;
+        }
+
+        .glass-panel {
+            background: rgba(22, 25, 30, 0.8);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .ai-glow {
+            box-shadow: 0 0 15px rgba(30, 58, 138, 0.4);
+            border: 1px solid theme('colors.secondary-container');
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md antialiased selection:bg-primary selection:text-on-primary min-h-screen">
+<!-- SideNavBar -->
+<nav class="hidden md:flex w-sidebar-width h-screen fixed left-0 top-0 border-r border-outline-variant bg-surface flex-col z-50">
+<!-- Header -->
+<div class="flex items-center gap-md px-md py-lg border-b border-outline-variant">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold overflow-hidden shrink-0">
+<img alt="Fleet Manager Avatar" class="w-full h-full object-cover" data-alt="A highly detailed avatar of a professional fleet manager wearing a high-tech headset, set against a dark mission control background. Corporate modern aesthetic, luminous layering, sharp precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDK922qzZBzhfiqMlShShyiB1x8ezok1b1eYDByUxMKigLzZTLz0bdwt4cgPKKBtrbnpywtNJlSmXlRDMJDLOt-P7BHLliYwuzdqmneDjSfS5l8tvJTvo6ZQUj7R3V9AzM7DpFfhZsH1Twapm_Kt2n_Ae2NrQN6QMPG4N9PI2F7Ac50JR_rQcaPgsJgTxht2uFuAwmzm0A4rtSUdVOD6AHluJUjByzq4AuDUCEPlZttRPyEKGLX0gz_c1NmgwYaR30IRgCCT24mQmw"/>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">TransitIQ</h1>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase">Fleet Manager</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<div class="flex-1 overflow-y-auto py-md">
+<ul class="space-y-sm">
+<!-- Dashboard (Active) -->
+<li>
+<a class="flex items-center gap-md px-md py-sm bg-primary-container/10 text-primary border-l-4 border-primary hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-label-md text-label-md uppercase">Dashboard</span>
+</a>
+</li>
+<!-- Fleet (Inactive) -->
+<li>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined">local_shipping</span>
+<span class="font-label-md text-label-md uppercase">Fleet</span>
+</a>
+</li>
+<!-- Drivers -->
+<li>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md uppercase">Drivers</span>
+</a>
+</li>
+<!-- Trips -->
+<li>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined">route</span>
+<span class="font-label-md text-label-md uppercase">Trips</span>
+</a>
+</li>
+<!-- Maintenance -->
+<li>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined">build</span>
+<span class="font-label-md text-label-md uppercase">Maintenance</span>
+</a>
+</li>
+<!-- Fuel & Expenses -->
+<li>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined">local_gas_station</span>
+<span class="font-label-md text-label-md uppercase">Fuel &amp; Expenses</span>
+</a>
+</li>
+<!-- Analytics -->
+<li>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md uppercase">Analytics</span>
+</a>
+</li>
+<!-- AI Assistant -->
+<li>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-md text-label-md uppercase">AI Assistant</span>
+</a>
+</li>
+<!-- Notifications -->
+<li>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined">notifications</span>
+<span class="font-label-md text-label-md uppercase flex-1">Notifications</span>
+<span class="bg-error text-on-error rounded-full w-5 h-5 flex items-center justify-center font-label-md text-[10px]">3</span>
+</a>
+</li>
+</ul>
+</div>
+<!-- Bottom Actions -->
+<div class="mt-auto border-t border-outline-variant py-sm">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95 duration-200 border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md uppercase">Settings</span>
+</a>
+</div>
+</nav>
+<!-- TopNavBar (Mobile mainly, but structured for context) -->
+<header class="h-16 fixed top-0 right-0 left-0 md:left-sidebar-width bg-surface/80 backdrop-blur-xl border-b border-outline-variant flex justify-between items-center px-lg z-40">
+<!-- Brand (Mobile only) -->
+<div class="md:hidden">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">TransitIQ</h1>
+</div>
+<!-- Search (Left on Web) -->
+<div class="hidden md:flex items-center flex-1 max-w-md">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">search</span>
+<input class="w-full bg-surface-container-high border border-outline-variant rounded-full py-2 pl-10 pr-4 text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary font-body-md transition-colors placeholder:text-on-surface-variant" placeholder="Search vehicles, drivers, trips..." type="text"/>
+</div>
+</div>
+<!-- Right Actions -->
+<div class="flex items-center gap-md ml-auto">
+<button class="text-on-surface-variant hover:text-primary transition-opacity cursor-pointer active:opacity-80 p-2 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-opacity cursor-pointer active:opacity-80 p-2 hidden sm:block">
+<span class="material-symbols-outlined">contrast</span>
+</button>
+<button class="bg-primary-container text-on-primary-container px-4 py-2 rounded font-label-md text-label-md uppercase hover:bg-primary transition-colors cursor-pointer active:scale-95 hidden sm:block">
+                Quick Add
+            </button>
+<div class="w-8 h-8 rounded-full overflow-hidden shrink-0 border border-outline-variant md:hidden">
+<img alt="Fleet Manager Profile" class="w-full h-full object-cover" data-alt="A highly detailed avatar of a professional fleet manager wearing a high-tech headset, set against a dark mission control background. Corporate modern aesthetic, luminous layering, sharp precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDO_sC_2FNxyBb5HlLM7xGnIL4PiqS89tCoFlcJkwG5n7IdBXAIiZHWh27AtGNqUgSvTf5QjZf57-MS15DexwQXUopP7zi3l7NzTFvGHMuTOFV5OQP6YKh328ZEszUFP9zD9vXJsNN8JhW1RTNvMwt6BHcCuCmnmPTDTANKewqwqKkGZ0AjCS3UV35RgZmYqiq1WN2I0NhDSG2dju7qjqQagTCT6cOBVFQVpgdBG__6Rb2qHRhDQLPS8VX6jIoGM9374APPG7THyGE"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-20 pb-lg px-md md:px-lg md:ml-sidebar-width min-h-screen">
+<div class="max-w-[1440px] mx-auto space-y-lg">
+<!-- Header Section -->
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-lg">
+<div>
+<h2 class="font-headline-lg text-headline-lg font-bold text-on-surface">Executive Overview</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Real-time telemetry and fleet operations status.</p>
+</div>
+<div class="flex gap-sm">
+<button class="px-4 py-2 rounded font-label-md text-label-md uppercase border border-outline-variant text-primary hover:bg-surface-container-high transition-colors cursor-pointer flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                        Add Vehicle
+                    </button>
+<button class="px-4 py-2 rounded font-label-md text-label-md uppercase bg-primary-container text-on-primary-container hover:bg-primary transition-colors cursor-pointer flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">send</span>
+                        Dispatch Trip
+                    </button>
+</div>
+</div>
+<!-- Row 1: KPI Cards Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-md">
+<!-- KPI: Active Vehicles -->
+<div class="bg-[#16191E] border border-[#262B33] rounded-lg p-md relative overflow-hidden flex flex-col justify-between h-32">
+<div class="flex justify-between items-start z-10">
+<h3 class="font-title-md text-title-md text-on-surface-variant">Active Vehicles</h3>
+<span class="material-symbols-outlined text-primary">local_shipping</span>
+</div>
+<div class="z-10 flex items-end gap-2">
+<span class="font-display-lg text-display-lg text-on-surface">84</span>
+<span class="font-body-md text-body-md text-tertiary mb-2 flex items-center"><span class="material-symbols-outlined text-[16px]">arrow_upward</span> 4%</span>
+</div>
+<!-- Minimal Sparkline Background -->
+<svg class="absolute bottom-0 left-0 w-full h-1/2 opacity-30" preserveaspectratio="none" viewbox="0 0 100 50">
+<path d="M0,50 L0,30 L20,40 L40,20 L60,35 L80,10 L100,25 L100,50 Z" fill="url(#kpi-grad-1)"></path>
+<path d="M0,30 L20,40 L40,20 L60,35 L80,10 L100,25" fill="none" stroke="theme('colors.primary')" stroke-width="2"></path>
+<defs>
+<lineargradient id="kpi-grad-1" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="theme('colors.primary')" stop-opacity="0.5"></stop>
+<stop offset="100%" stop-color="theme('colors.primary')" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+<!-- KPI: Vehicles in Maint -->
+<div class="bg-[#16191E] border border-[#262B33] rounded-lg p-md relative overflow-hidden flex flex-col justify-between h-32">
+<div class="flex justify-between items-start z-10">
+<h3 class="font-title-md text-title-md text-on-surface-variant">In Maintenance</h3>
+<span class="material-symbols-outlined text-error">build</span>
+</div>
+<div class="z-10 flex items-end gap-2">
+<span class="font-display-lg text-display-lg text-on-surface">12</span>
+<span class="font-body-md text-body-md text-error mb-2 flex items-center"><span class="material-symbols-outlined text-[16px]">arrow_upward</span> 2</span>
+</div>
+</div>
+<!-- KPI: Active Trips -->
+<div class="bg-[#16191E] border border-[#262B33] rounded-lg p-md relative overflow-hidden flex flex-col justify-between h-32">
+<div class="flex justify-between items-start z-10">
+<h3 class="font-title-md text-title-md text-on-surface-variant">Active Trips</h3>
+<span class="material-symbols-outlined text-tertiary">route</span>
+</div>
+<div class="z-10 flex items-end gap-2">
+<span class="font-display-lg text-display-lg text-on-surface">42</span>
+<span class="font-body-md text-body-md text-on-surface-variant mb-2">/ 50 Sched.</span>
+</div>
+<!-- Minimal Sparkline Background -->
+<svg class="absolute bottom-0 left-0 w-full h-1/2 opacity-30" preserveaspectratio="none" viewbox="0 0 100 50">
+<path d="M0,50 L0,20 L20,25 L40,15 L60,25 L80,10 L100,5 L100,50 Z" fill="url(#kpi-grad-3)"></path>
+<path d="M0,20 L20,25 L40,15 L60,25 L80,10 L100,5" fill="none" stroke="theme('colors.tertiary')" stroke-width="2"></path>
+<defs>
+<lineargradient id="kpi-grad-3" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="theme('colors.tertiary')" stop-opacity="0.5"></stop>
+<stop offset="100%" stop-color="theme('colors.tertiary')" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+<!-- KPI: Fleet Health Score -->
+<div class="bg-[#16191E] border border-[#262B33] rounded-lg p-md flex items-center justify-between h-32">
+<div class="flex flex-col justify-between h-full">
+<h3 class="font-title-md text-title-md text-on-surface-variant">Fleet Health</h3>
+<span class="font-label-md text-label-md text-tertiary uppercase flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> Optimal
+                        </span>
+</div>
+<!-- Radial Indicator -->
+<div class="relative w-20 h-20">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<!-- Background circle -->
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="theme('colors.surface-variant')" stroke-width="8"></circle>
+<!-- Progress circle -->
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="theme('colors.primary')" stroke-dasharray="251.2" stroke-dashoffset="20.096" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="font-title-md text-title-md font-bold text-on-surface">92%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Row 2: Charts and AI -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-md">
+<!-- Large Chart: Utilization & Fuel (Takes up 2 columns on lg) -->
+<div class="lg:col-span-2 bg-[#16191E] border border-[#262B33] rounded-lg p-md flex flex-col min-h-[300px]">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-title-md text-title-md font-semibold text-on-surface uppercase tracking-wider">Performance Metrics</h3>
+<div class="flex gap-4">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary shadow-[0_0_8px_rgba(255,184,101,0.6)]"></div>
+<span class="font-label-md text-label-md text-on-surface-variant uppercase">Utilization</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-tertiary"></div>
+<span class="font-label-md text-label-md text-on-surface-variant uppercase">Fuel Vol.</span>
+</div>
+</div>
+</div>
+<!-- Chart Area -->
+<div class="flex-1 relative w-full h-full min-h-[220px]">
+<!-- Grid lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-20">
+<div class="border-b border-on-surface-variant w-full h-0"></div>
+<div class="border-b border-on-surface-variant w-full h-0"></div>
+<div class="border-b border-on-surface-variant w-full h-0"></div>
+<div class="border-b border-on-surface-variant w-full h-0"></div>
+<div class="border-b border-on-surface-variant w-full h-0"></div>
+</div>
+<!-- SVG Chart -->
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 1000 200">
+<defs>
+<lineargradient id="area-gradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="theme('colors.tertiary')" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="theme('colors.tertiary')" stop-opacity="0.0"></stop>
+</lineargradient>
+</defs>
+<!-- Area Chart (Fuel) -->
+<path class="area-chart-path" d="M0,200 L0,150 L100,160 L200,120 L300,140 L400,90 L500,110 L600,60 L700,80 L800,40 L900,50 L1000,20 L1000,200 Z"></path>
+<!-- Line Chart (Utilization Trend) -->
+<path class="line-chart-path" d="M0,120 L100,90 L200,110 L300,60 L400,80 L500,40 L600,70 L700,30 L800,50 L900,10 L1000,30"></path>
+<!-- Data Points (Utilization) -->
+<circle cx="100" cy="90" fill="theme('colors.surface')" r="4" stroke="theme('colors.primary')" stroke-width="2"></circle>
+<circle cx="500" cy="40" fill="theme('colors.surface')" r="4" stroke="theme('colors.primary')" stroke-width="2"></circle>
+<circle cx="900" cy="10" fill="theme('colors.surface')" r="4" stroke="theme('colors.primary')" stroke-width="2"></circle>
+</svg>
+<!-- X Axis Labels -->
+<div class="absolute bottom-[-24px] left-0 w-full flex justify-between text-on-surface-variant font-code-sm text-code-sm px-2">
+<span>08:00</span>
+<span>10:00</span>
+<span>12:00</span>
+<span>14:00</span>
+<span>16:00</span>
+<span>18:00</span>
+</div>
+</div>
+</div>
+<!-- AI Assistant / Maintenance Alerts (Takes 1 column) -->
+<div class="bg-[#1C2128] border border-outline-variant rounded-lg p-md flex flex-col h-full ai-glow relative overflow-hidden">
+<!-- Glassmorphic header effect -->
+<div class="absolute top-0 left-0 w-full h-1/3 bg-gradient-to-b from-secondary-container/20 to-transparent pointer-events-none"></div>
+<div class="flex items-center gap-2 mb-md z-10">
+<span class="material-symbols-outlined text-tertiary">smart_toy</span>
+<h3 class="font-title-md text-title-md font-semibold text-tertiary">Fleet AI Insights</h3>
+</div>
+<div class="flex-1 space-y-sm overflow-y-auto z-10 pr-2 pb-12">
+<!-- Alert Item -->
+<div class="bg-[#16191E] border border-[#262B33] rounded p-sm flex gap-3">
+<span class="material-symbols-outlined text-error mt-0.5 text-[20px]">warning</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface uppercase mb-1">Truck #402 - Brake Wear</p>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Telemetry indicates irregular brake pressure. Recommend routing to nearest service center.</p>
+</div>
+</div>
+<!-- Insight Item -->
+<div class="bg-[#16191E] border border-[#262B33] rounded p-sm flex gap-3">
+<span class="material-symbols-outlined text-primary mt-0.5 text-[20px]">lightbulb</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface uppercase mb-1">Route Optimization</p>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Rerouting 3 active trips around I-95 congestion could save estimated 45 mins total.</p>
+</div>
+</div>
+</div>
+<!-- AI Input Area (Glassmorphic) -->
+<div class="absolute bottom-0 left-0 w-full p-3 glass-panel z-20">
+<div class="relative">
+<input class="w-full bg-[#111317]/50 border border-outline-variant rounded-full py-2 pl-4 pr-10 text-on-surface text-sm focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary" placeholder="Ask Fleet AI..." type="text"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 text-tertiary hover:text-tertiary-container">
+<span class="material-symbols-outlined text-[20px]">auto_awesome</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Row 3: Map & Timeline Bento Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-md">
+<!-- Live Map (Takes 2 columns) -->
+<div class="lg:col-span-2 bg-[#16191E] border border-[#262B33] rounded-lg overflow-hidden relative min-h-[400px]">
+<!-- Map Background Image -->
+<div class="absolute inset-0 bg-cover bg-center opacity-60" data-alt="A highly detailed top-down view of a dark-themed digital city map, specifically visualizing Chicago. The map features high-contrast neon orange and deep blue glowing lines representing active transport routes, resembling a high-tech logistics control interface. Corporate modern aesthetic, luminous layering." data-location="Chicago" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAUh6UBMpsksla5zK1E6SuQgqkIAfByJo3GmDDEbhnjZ6kM-KI_EE4MvkzeCjHhgnCH2uBkMC3t4QYI18UgdDl210o8tL9_HeWhpNm-14ZmYHeBbFicfTpGcCd5w3NFPi85IQUDxJOBtQ8co1tWDhF6pSZ3x8c37-6HSwPPqdQV4f-VP6aLflNexCVDgtc3xV1LpTjV1FeDs19P034lZHw4r_rjdYW7_ZFSbSNfyCgcE43EeCGZz00wCQ8KLzQ-Kd4pX5zMgYJNGfc')"></div>
+<!-- Map Overlay UI -->
+<div class="absolute top-4 left-4 z-10 glass-panel rounded p-sm flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<span class="font-label-md text-label-md text-on-surface uppercase tracking-wide">Live Tracking</span>
+</div>
+<div class="absolute top-4 right-4 z-10 flex flex-col gap-2">
+<button class="w-8 h-8 glass-panel rounded flex items-center justify-center text-on-surface hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+<button class="w-8 h-8 glass-panel rounded flex items-center justify-center text-on-surface hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">remove</span>
+</button>
+<button class="w-8 h-8 glass-panel rounded flex items-center justify-center text-on-surface hover:text-primary transition-colors mt-2">
+<span class="material-symbols-outlined text-[20px]">my_location</span>
+</button>
+</div>
+<!-- Simulated Map Markers -->
+<div class="absolute top-1/3 left-1/4 transform -translate-x-1/2 -translate-y-1/2 z-10 group cursor-pointer">
+<div class="w-4 h-4 bg-primary rounded-full shadow-[0_0_15px_rgba(255,184,101,0.8)] border-2 border-surface relative">
+<!-- Tooltip -->
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-max glass-panel rounded p-2 text-xs border border-outline-variant">
+<p class="font-bold text-on-surface">TRK-109</p>
+<p class="text-on-surface-variant">En route: ORD</p>
+</div>
+</div>
+</div>
+<div class="absolute top-1/2 left-2/3 transform -translate-x-1/2 -translate-y-1/2 z-10 group cursor-pointer">
+<div class="w-4 h-4 bg-tertiary rounded-full shadow-[0_0_15px_rgba(131,207,255,0.8)] border-2 border-surface relative">
+<!-- Tooltip -->
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-max glass-panel rounded p-2 text-xs border border-outline-variant">
+<p class="font-bold text-on-surface">TRK-214</p>
+<p class="text-on-surface-variant">Idle</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Activity Timeline (Takes 1 column) -->
+<div class="bg-[#16191E] border border-[#262B33] rounded-lg p-md flex flex-col h-[400px]">
+<div class="flex justify-between items-center mb-md pb-2 border-b border-[#262B33]">
+<h3 class="font-title-md text-title-md font-semibold text-on-surface uppercase tracking-wider">Recent Activity</h3>
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">history</span>
+</div>
+<div class="flex-1 overflow-y-auto pr-2 relative">
+<!-- Timeline Line -->
+<div class="absolute left-[11px] top-2 bottom-0 w-0.5 bg-[#262B33]"></div>
+<div class="space-y-lg relative">
+<!-- Activity Item 1 -->
+<div class="flex gap-4 relative">
+<div class="w-6 h-6 rounded-full bg-surface border-2 border-primary z-10 flex items-center justify-center shrink-0 mt-0.5">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant mb-0.5">10:42 AM</p>
+<p class="font-body-md text-body-md text-on-surface font-medium">Trip Completed: ORD to MDW</p>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">Driver: S. Miller (TRK-084)</p>
+</div>
+</div>
+<!-- Activity Item 2 -->
+<div class="flex gap-4 relative">
+<div class="w-6 h-6 rounded-full bg-surface border-2 border-error z-10 flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[14px] text-error">priority_high</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant mb-0.5">09:15 AM</p>
+<p class="font-body-md text-body-md text-on-surface font-medium">Maintenance Alert Flagged</p>
+<div class="mt-1 inline-flex px-2 py-0.5 rounded-full bg-error/20 border border-error/50 font-label-md text-[10px] text-error uppercase">High Priority</div>
+</div>
+</div>
+<!-- Activity Item 3 -->
+<div class="flex gap-4 relative">
+<div class="w-6 h-6 rounded-full bg-surface border-2 border-[#534435] z-10 flex items-center justify-center shrink-0 mt-0.5"></div>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant mb-0.5">08:30 AM</p>
+<p class="font-body-md text-body-md text-on-surface font-medium">Shift Began: 14 Drivers</p>
+</div>
+</div>
+<!-- Activity Item 4 -->
+<div class="flex gap-4 relative">
+<div class="w-6 h-6 rounded-full bg-surface border-2 border-[#534435] z-10 flex items-center justify-center shrink-0 mt-0.5"></div>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant mb-0.5">Yesterday</p>
+<p class="font-body-md text-body-md text-on-surface font-medium">System Update Completed</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>
