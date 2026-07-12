@@ -42,12 +42,11 @@ export const Layout: React.FC = () => {
     return <Navigate to="/signin" replace />;
   }
 
-  // URL Enforcement / Role-Based Access Routing Check
   const allowedPaths: Record<string, string[]> = {
-    "Financial Analyst": ["/", "/financials", "/settings", "/ai-assistant"],
-    "Driver": ["/", "/trips", "/ai-assistant"],
-    "Dispatcher": ["/", "/trips", "/ai-assistant"],
-    "Safety Officer": ["/", "/fleet", "/drivers", "/notifications", "/ai-assistant"],
+    "Financial Analyst": ["/", "/financials", "/settings"],
+    "Driver": ["/", "/trips"],
+    "Dispatcher": ["/", "/trips"],
+    "Safety Officer": ["/", "/fleet", "/drivers", "/notifications"],
     "Fleet Manager": ["/", "/fleet", "/drivers", "/trips", "/maintenance", "/financials", "/analytics", "/ai-assistant", "/activity", "/notifications", "/settings"]
   };
 

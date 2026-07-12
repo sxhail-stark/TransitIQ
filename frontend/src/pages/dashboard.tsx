@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell } from "recharts";
 import { api } from "../lib/api";
+import { useAuth } from "../context/AuthContext";
 
 export const Dashboard: React.FC = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [summary, setSummary] = useState<any>(null);
   const [fuelTrend, setFuelTrend] = useState<any[]>([]);
   const [expenseBreakdown, setExpenseBreakdown] = useState<any[]>([]);
@@ -71,12 +73,21 @@ export const Dashboard: React.FC = () => {
   ];
 
   // Quick action triggers
-  const actions = [
+  const baseActions = [
     { title: "Dispatch Trip", icon: "route", path: "/trips", color: "text-primary border-primary-container/20" },
     { title: "Add Vehicle", icon: "local_shipping", path: "/fleet", color: "text-secondary border-secondary-container/20" },
     { title: "Add Driver", icon: "badge", path: "/drivers", color: "text-tertiary border-tertiary-container/20" },
     { title: "AI Assistant", icon: "smart_toy", path: "/ai-assistant", color: "text-emerald-400 border-emerald-500/20" }
   ];
+
+  const getFilteredActions = () => {
+    if (user?.role !== "Fleet Manager") {
+      return baseActions.filter((act) => act.title !== "Add Vehicle" && act.title !== "Add Driver");
+    }
+    return baseActions;
+  };
+
+  const actions = getFilteredActions();
 
   return (
     <div className="space-y-lg">

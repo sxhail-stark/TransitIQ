@@ -31,17 +31,17 @@ export const Sidebar: React.FC = () => {
     const role = user.role;
     if (role === "Financial Analyst") {
       return navItems.filter((item) =>
-        ["Dashboard", "Financials", "Settings", "AI Assistant"].includes(item.name)
+        ["Dashboard", "Financials", "Settings"].includes(item.name)
       );
     }
     if (role === "Driver" || role === "Dispatcher") {
       return navItems.filter((item) =>
-        ["Dashboard", "Trips (Dispatcher)", "AI Assistant"].includes(item.name)
+        ["Dashboard", "Trips (Dispatcher)"].includes(item.name)
       );
     }
     if (role === "Safety Officer") {
       return navItems.filter((item) =>
-        ["Dashboard", "Fleet Registry", "Drivers", "Notifications", "AI Assistant"].includes(item.name)
+        ["Dashboard", "Fleet Registry", "Drivers", "Notifications"].includes(item.name)
       );
     }
     return navItems; // Fleet Manager has full access
