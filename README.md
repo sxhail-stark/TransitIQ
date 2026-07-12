@@ -1,4 +1,4 @@
-# 🚛 TransitOps
+# 🚛 TransitIQ
 ## Smart, Constraint-Aware Transport Operations Platform
 
 > **From Fleet Records to Fleet Decisions.**
@@ -13,7 +13,7 @@ Every operational action automatically updates all related modules, reducing rep
 
 ---
 
-## 🏆 Team THE_GOAT
+## 🏆 Team: THE_GOAT
 
 | Team Member |
 |---|
@@ -37,15 +37,15 @@ Many logistics and transport organizations still depend on:
 
 This creates serious operational problems:
 
-- 🚫 Double assignment of vehicles and drivers
-- ⚠️ Drivers being assigned with expired licenses
-- 📦 Vehicles being assigned cargo beyond their capacity
-- 🔧 Vehicles under maintenance being accidentally dispatched
-- ⛽ Poor visibility into fuel efficiency
-- 💸 Inaccurate operational cost tracking
-- 📉 Underutilized fleet resources
-- 🕒 Repetitive manual data entry
-- 📊 Lack of real-time operational intelligence
+-  Double assignment of vehicles and drivers
+-  Drivers being assigned with expired licenses
+-  Vehicles being assigned cargo beyond their capacity
+-  Vehicles under maintenance being accidentally dispatched
+-  Poor visibility into fuel efficiency
+-  Inaccurate operational cost tracking
+-  Underutilized fleet resources
+-  Repetitive manual data entry
+-  Lack of real-time operational intelligence
 
 Traditional systems often **record problems after they happen**.
 
