@@ -1013,16 +1013,16 @@ TransitOps is designed to scale beyond the hackathon prototype.
 
 Future enhancements may include:
 
-- 🗺️ Real-time GPS fleet tracking
-- 🧠 Predictive maintenance
-- 📍 Route optimization
-- ⛽ Fuel anomaly detection
-- 🚨 Driver risk prediction
-- 📱 Driver mobile application
-- 🌍 Multi-region fleet management
-- 📡 IoT vehicle telemetry integration
-- 🔋 EV battery and charging management
-- 📊 Advanced cost forecasting
+-  Real-time GPS fleet tracking
+-  Predictive maintenance
+-  Route optimization
+-  Fuel anomaly detection
+-  Driver risk prediction
+-  Driver mobile application
+-  Multi-region fleet management
+-  IoT vehicle telemetry integration
+-  EV battery and charging management
+-  Advanced cost forecasting
 
 ---
 
