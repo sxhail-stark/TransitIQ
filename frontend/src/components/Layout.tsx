@@ -1,3 +1,7 @@
+// Main application layout component.
+// Handles authentication checks, sidebar/navbar rendering, and page routing.
+// Also fetches unread notifications and displays the global dashboard shell.
+
 import React, { useEffect, useState } from "react";
 import { Navigate, Outlet, Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
